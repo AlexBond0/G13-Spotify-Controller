@@ -15,6 +15,8 @@
 #include <codecvt>
 #include <locale>
 
+#include "Tools.h"
+
 
 using namespace utility;                    // Common utilities like string conversions
 using namespace web;                        // Common features like URIs.
