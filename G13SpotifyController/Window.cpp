@@ -1,17 +1,17 @@
 #include "Window.h"
 
 
-
 Window::Window()
 {
+
+	CreateContainers();
+
 	// setup the render & input scheduler
-	SetTimer(NULL, RENDER_TIMER, 500, NULL);
-	SetTimer(NULL, INPUT_TIMER, 500, NULL);
+	renderTimer = SetTimer(NULL, RENDER_TIMER, 500, NULL);
+	inputTimer = SetTimer(NULL, INPUT_TIMER, 500, NULL);
 
 	// create a message loop for the renderer
 	MSG msg;
-
-	testNum = 0;
 
 	// keep looping until we get the quit message
 	PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE);
@@ -33,8 +33,8 @@ Window::Window()
 
 Window::~Window()
 {
-	KillTimer(NULL, RENDER_TIMER);
-	KillTimer(NULL, INPUT_TIMER);
+	KillTimer(NULL, renderTimer);
+	KillTimer(NULL, inputTimer);
 }
 
 LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -43,10 +43,13 @@ LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
 	{
 	case WM_TIMER: {
 
-		if (wParam == INPUT_TIMER)
+		UINT timerid = (UINT)wParam;
+		UINT timerA = renderTimer;
+
+		if (timerid == inputTimer)
 			CheckInput();
 
-		else if (wParam == RENDER_TIMER)
+		else if (timerid == renderTimer)
 			Render();
 
 		break;
@@ -73,12 +76,16 @@ void Window::CheckInput() {
 void Window::Render() {
 
 	// render to screen
-	std::wstring pingus = L"Rendering!" + (Tools::to_Wstring(std::to_string(testNum)));
-	LogiLcdMonoSetText(0, &pingus[0]);
+	bool worked = LogiLcdMonoSetBackground(containers[0]->GetContainer());
+	OutputDebugString(worked ? "worked!" : "dodn't work!");
 
+	// tell G13 to update screen
 	LogiLcdUpdate();
-	testNum++;
+}
 
-	if (testNum > 10)
-		PostMessage(NULL, WM_CLOSE, 0, 0);
+void Window::CreateContainers() {
+
+	UIContainer* test = new UIContainer(L"exampleUI.bmp", 0, 0);
+
+	containers.push_back(test);
 }

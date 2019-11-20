@@ -131,6 +131,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Requester.cpp" />
     <ClCompile Include="Tools.cpp" />
+    <ClCompile Include="UIContainer.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="Requester.h" />
     <ClInclude Include="Tools.h" />
+    <ClInclude Include="UIContainer.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>

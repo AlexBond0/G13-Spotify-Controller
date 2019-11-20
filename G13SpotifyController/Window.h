@@ -3,8 +3,10 @@
 #include <Windows.h>
 #include <string>
 #include <LogitechLCDLib.h>
+#include <vector>
 
 #include "Tools.h"
+#include "UIContainer.h"
 
 #define RENDER_TIMER 1001
 #define INPUT_TIMER 1002
@@ -19,6 +21,11 @@ private:
 	void CheckInput();
 	void Render();
 
+	int renderTimer;
+	int inputTimer;
+
+	void CreateContainers();
+
 	LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool BTN0;
@@ -26,6 +33,6 @@ private:
 	bool BTN2;
 	bool BTN3;
 
-	int testNum;
+	std::vector<UIContainer*> containers;
 };
 
