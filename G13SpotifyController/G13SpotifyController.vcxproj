@@ -128,8 +128,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="G13Container.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Requester.cpp" />
+    <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Tools.cpp" />
     <ClCompile Include="UIContainer.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -138,7 +141,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="G13Container.h" />
     <ClInclude Include="Requester.h" />
+    <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Tools.h" />
     <ClInclude Include="UIContainer.h" />
     <ClInclude Include="Window.h" />

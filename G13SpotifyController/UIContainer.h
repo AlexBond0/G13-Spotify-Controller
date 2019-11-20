@@ -19,6 +19,8 @@ public:
 	UIContainer(std::wstring filename, int posx, int posy);
 	~UIContainer();
 
+	void Imprint(UIContainer& stamp);
+
 	bool SetPixel(int x, int y, BYTE state);
 	BYTE GetPixel(int x, int y);
 

@@ -18,6 +18,10 @@ UIContainer::UIContainer(int width, int height, int posx, int posy) {
 
 UIContainer::UIContainer(std::wstring filename, int posx, int posy) {
 
+	// save position
+	positionX = posx;
+	positionY = posy;
+
 	// Start Gdiplus 
 	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
 	Gdiplus::GdiplusStartup(&g_gdiplusToken, &gdiplusStartupInput, NULL);
@@ -44,7 +48,10 @@ UIContainer::UIContainer(std::wstring filename, int posx, int posy) {
 			NULL,
 			&bitmapInfoMono, DIB_RGB_COLORS);
 
+		// get the size of the incoming bitmap
 		int bitmapSize = bitmapInfoMono.bmiHeader.biWidth * bitmapInfoMono.bmiHeader.biHeight;
+		dataWidth = bitmapInfoMono.bmiHeader.biWidth;
+		dataHeight = bitmapInfoMono.bmiHeader.biHeight;
 
 		byteBitmapMono = new BYTE[bitmapSize * 4];
 		UIdata = new BYTE[bitmapSize];
@@ -84,7 +91,8 @@ UIContainer::UIContainer(std::wstring filename, int posx, int posy) {
 
 UIContainer::~UIContainer() {
 
-	delete UIdata;
+	if (UIdata)
+		delete UIdata;
 }
 
 // set single pixel in the container, returns if success
@@ -118,6 +126,38 @@ BYTE* UIContainer::GetContainer() {
 	return UIdata;
 }
 
+void UIContainer::Imprint(UIContainer& stamp) {
+
+	// get widths and heights once
+	int rhWidth = stamp.GetWidth();
+	int rhHeight = stamp.GetHeight();
+	int lhWidth = GetWidth();
+	int lhHeight = GetHeight();
+
+	// calculate offset between containers
+	int offsetX = stamp.GetPosX() - GetPosX();
+	int offsetY = stamp.GetPosY() - GetPosY();
+
+	int relativeX;
+	int relativeY;
+
+	BYTE pixel;
+
+	// loop over right hand container
+	for (int rhx = 0; rhx < rhWidth; rhx++) {
+		for (int rhy = 0; rhy < rhHeight; rhy++) {
+
+			relativeX = rhx + offsetX;
+			relativeY = rhy + offsetY;
+			pixel = stamp.GetPixel(rhx, rhy);
+
+			// set pixel in the left hand container according to offsets
+			if (pixel >= 128)
+				SetPixel(relativeX, relativeY, pixel);
+		}
+	}
+}
+
 // imprint the right-hand container onto the left-hand container
 UIContainer operator<< (UIContainer& lhs, UIContainer& rhs) {
 
@@ -135,15 +175,19 @@ UIContainer operator<< (UIContainer& lhs, UIContainer& rhs) {
 	int relativeX;
 	int relativeY;
 
+	BYTE pixel;
+
 	// loop over right hand container
 	for (int rhx = 0; rhx < rhWidth; rhx++) {
 		for (int rhy = 0; rhy < rhHeight; rhy++) {
 
 			relativeX = rhx + offsetX;
 			relativeY = rhy + offsetY;
+			pixel = rhs.GetPixel(rhx, rhy);
 
-			// set pixel in the left hand container according to
-			lhs.SetPixel(relativeX, relativeY, rhs.GetPixel(rhx, rhy));
+			// set pixel in the left hand container according to offsets
+			if (pixel >= 128)
+				lhs.SetPixel(relativeX, relativeY, pixel);
 		}
 	}
 

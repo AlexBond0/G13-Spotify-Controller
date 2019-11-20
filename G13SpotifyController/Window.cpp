@@ -75,9 +75,21 @@ void Window::CheckInput() {
 
 void Window::Render() {
 
+	G13Container screen = G13Container();
+
+	for (Component* c : components)
+		c->Render(&screen);
+
+	/*components[1]->Render(&screen);
+	components[2]->Render(&screen);
+	components[3]->Render(&screen);*/
+
+	bool worked = LogiLcdMonoSetBackground(screen.GetContainer());
+	// OutputDebugString(worked ? "worked!" : "dodn't work!");
+
 	// render to screen
-	bool worked = LogiLcdMonoSetBackground(containers[0]->GetContainer());
-	OutputDebugString(worked ? "worked!" : "dodn't work!");
+	/*bool worked = LogiLcdMonoSetBackground(containers[0]->GetContainer());
+	OutputDebugString(worked ? "worked!" : "dodn't work!");*/
 
 	// tell G13 to update screen
 	LogiLcdUpdate();
@@ -85,7 +97,9 @@ void Window::Render() {
 
 void Window::CreateContainers() {
 
-	UIContainer* test = new UIContainer(L"exampleUI.bmp", 0, 0);
+	// components.push_back(new Component(L"exampleUI.bmp", 0, 0));
 
-	containers.push_back(test);
-}
+	components.push_back(new Component(L"SmallCircle.bmp", 0, 0));
+	components.push_back(new Component(L"SmallCircle.bmp", 10, 12));
+	components.push_back(new Component(L"SmallCircle.bmp", 5, 5));
+} 

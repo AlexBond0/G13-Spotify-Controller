@@ -6,7 +6,8 @@
 #include <vector>
 
 #include "Tools.h"
-#include "UIContainer.h"
+#include "Component.h"
+#include "G13Container.h"
 
 #define RENDER_TIMER 1001
 #define INPUT_TIMER 1002
@@ -33,6 +34,6 @@ private:
 	bool BTN2;
 	bool BTN3;
 
-	std::vector<UIContainer*> containers;
+	std::vector<Component*> components;
 };
 
