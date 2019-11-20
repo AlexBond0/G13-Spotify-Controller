@@ -1,10 +1,17 @@
 #include "Window.h"
 
 
-Window::Window()
-{
+Window::Window() {
 
-	CreateContainers();
+}
+
+Window::~Window() {
+
+	for (Component* c : components)
+		delete c;
+}
+
+void Window::Run() {
 
 	// setup the render & input scheduler
 	renderTimer = SetTimer(NULL, RENDER_TIMER, 500, NULL);
@@ -29,10 +36,7 @@ Window::Window()
 			DispatchMessage(&msg);
 		}
 	}
-}
 
-Window::~Window()
-{
 	KillTimer(NULL, renderTimer);
 	KillTimer(NULL, inputTimer);
 }
@@ -75,39 +79,16 @@ void Window::CheckInput() {
 
 void Window::Render() {
 
+	// create container just for the screen
 	G13Container screen = G13Container();
 
+	// render all active components
 	for (Component* c : components)
 		c->Render(&screen);
 
-	/*components[1]->Render(&screen);
-	components[2]->Render(&screen);
-	components[3]->Render(&screen);*/
-
+	// send screen data to the G13
 	bool worked = LogiLcdMonoSetBackground(screen.GetContainer());
-	// OutputDebugString(worked ? "worked!" : "dodn't work!");
-
-	// render to screen
-	/*bool worked = LogiLcdMonoSetBackground(containers[0]->GetContainer());
-	OutputDebugString(worked ? "worked!" : "dodn't work!");*/
 
 	// tell G13 to update screen
 	LogiLcdUpdate();
 }
-
-void Window::CreateContainers() {
-
-	// components.push_back(new Component(L"exampleUI.bmp", 0, 0));
-
-	/*components.push_back(new Component(L"SmallCircle.bmp", 0, 0));
-	components.push_back(new Component(L"SmallCircle.bmp", 10, 12));
-	components.push_back(new Component(L"SmallCircle.bmp", 5, 5));*/
-
-	TextComponent* text = new Lucida_TC(100, 0, 0);
-	text->RenderText("A song on spotify :)");
-	components.push_back(text);
-
-	text = new Compact_TC(100, 0, 20);
-	text->RenderText("A song on spotify :)");
-	components.push_back(text);
-} 

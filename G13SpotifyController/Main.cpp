@@ -2,7 +2,7 @@
 
 #include <LogitechLCDLib.h>
 #include "Requester.h"
-#include "Window.h"
+#include "CurrentlyPlaying_W.h"
 
 #include <string>
 
@@ -10,27 +10,16 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmd, int show)
 {
 	// program starts here
 
-	OutputDebugString("Working...");
-
-	std::wstring message = L"Spotify Controller";
+	OutputDebugString("\nLoading G13...");
 
 	// connect to G13
+	std::wstring message = L"Spotify Controller";
 	bool ret = LogiLcdInit(&message[0], LOGI_LCD_TYPE_MONO);
-	OutputDebugString((ret == TRUE) ? "TRUE" : "FALSE");
-
-	/*LogiLcdUpdate();
-
-	std::wstring pingus = L"This will display my";
-	LogiLcdMonoSetText(0, &pingus[0]);
-
-	pingus = L"spotify info";
-	LogiLcdMonoSetText(1, &pingus[0]);
-
-	LogiLcdUpdate();*/
+	OutputDebugString((ret == TRUE) ? "\nCONNECTED" : "\nNOT CONNECTED");
 
 	// Requester::TestRequest();
 
-	Window w = Window();
+	Window w = CurrentlyPlaying_W();
 
 	LogiLcdShutdown();
 	return 0;

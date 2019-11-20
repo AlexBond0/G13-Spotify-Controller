@@ -9,8 +9,12 @@ TextComponent::TextComponent(int width, int height, int posx, int posy)
 }
 
 
-TextComponent::~TextComponent()
-{
+TextComponent::~TextComponent() {
+
+	for (std::pair<char, UIContainer*> letter : dictionary) {
+
+		delete letter.second;
+	}
 }
  
 _json TextComponent::LoadTextLayout(std::wstring filename) {

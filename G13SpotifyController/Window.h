@@ -6,10 +6,8 @@
 #include <vector>
 
 #include "Tools.h"
-#include "Component.h"
-#include "G13Container.h"
-#include "Lucida_TC.h"
-#include "Compact_TC.h"
+#include "G13.h"
+
 
 #define RENDER_TIMER 1001
 #define INPUT_TIMER 1002
@@ -20,16 +18,9 @@ public:
 	Window();
 	~Window();
 
-private:
-	void CheckInput();
-	void Render();
+	void Run();
 
-	int renderTimer;
-	int inputTimer;
-
-	void CreateContainers();
-
-	LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+protected:
 
 	bool BTN0;
 	bool BTN1;
@@ -37,5 +28,14 @@ private:
 	bool BTN3;
 
 	std::vector<Component*> components;
+
+private:
+
+	int renderTimer;
+	int inputTimer;
+
+	LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	void CheckInput();
+	void Render();
 };
 
