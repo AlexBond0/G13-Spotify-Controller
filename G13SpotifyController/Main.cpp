@@ -2,6 +2,7 @@
 
 #include <LogitechLCDLib.h>
 #include "Requester.h"
+#include "Window.h"
 
 #include <string>
 
@@ -27,15 +28,9 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmd, int show)
 
 	LogiLcdUpdate();
 
-	Requester::TestRequest();
+	// Requester::TestRequest();
 
-
-	// Sleep(15000);
-
-	int x = 1;
-	while (x > 0) {
-		x++;
-	}
+	Window w = Window();
 
 	LogiLcdShutdown();
 	return 0;

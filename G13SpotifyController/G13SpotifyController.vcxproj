@@ -131,6 +131,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Requester.cpp" />
     <ClCompile Include="Tools.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -138,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="Requester.h" />
     <ClInclude Include="Tools.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="tokens.txt" />
