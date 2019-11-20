@@ -8,7 +8,8 @@
 #include "Tools.h"
 #include "Component.h"
 #include "G13Container.h"
-#include "LC_TextComponent.h"
+#include "Lucida_TC.h"
+#include "Compact_TC.h"
 
 #define RENDER_TIMER 1001
 #define INPUT_TIMER 1002

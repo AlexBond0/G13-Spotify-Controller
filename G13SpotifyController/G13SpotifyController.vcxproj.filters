@@ -16,6 +16,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{c02694d0-d16e-4616-bcbb-b87ba3181248}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Text">
+      <UniqueIdentifier>{91a13ec0-0766-4576-8869-f755e2c6d658}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -40,10 +43,13 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="TextComponent.cpp">
-      <Filter>Components</Filter>
+      <Filter>Components\Text</Filter>
     </ClCompile>
-    <ClCompile Include="LC_TextComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Compact_TC.cpp">
+      <Filter>Components\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Lucida_TC.cpp">
+      <Filter>Components\Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -69,10 +75,13 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="TextComponent.h">
-      <Filter>Components</Filter>
+      <Filter>Components\Text</Filter>
     </ClInclude>
-    <ClInclude Include="LC_TextComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="Compact_TC.h">
+      <Filter>Components\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Lucida_TC.h">
+      <Filter>Components\Text</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

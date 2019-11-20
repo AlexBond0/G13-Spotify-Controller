@@ -13,7 +13,7 @@ public:
 
 	void Render(UIContainer* screen);
 
-private:
+protected:
 
 	UIContainer _ui;
 	

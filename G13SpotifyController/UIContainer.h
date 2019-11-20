@@ -21,6 +21,7 @@ public:
 	~UIContainer();
 
 	void Imprint(UIContainer& stamp);
+	void Clear();
 
 	bool SetPixel(int x, int y, BYTE state);
 	BYTE GetPixel(int x, int y);

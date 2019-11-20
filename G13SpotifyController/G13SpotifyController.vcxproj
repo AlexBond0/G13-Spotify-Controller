@@ -128,9 +128,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Compact_TC.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="G13Container.cpp" />
-    <ClCompile Include="LC_TextComponent.cpp" />
+    <ClCompile Include="Lucida_TC.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Requester.cpp" />
     <ClCompile Include="TextComponent.cpp" />
@@ -142,9 +143,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Compact_TC.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="G13Container.h" />
-    <ClInclude Include="LC_TextComponent.h" />
+    <ClInclude Include="Lucida_TC.h" />
     <ClInclude Include="Requester.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Tools.h" />

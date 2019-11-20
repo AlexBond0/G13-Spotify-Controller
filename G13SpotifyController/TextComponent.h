@@ -17,11 +17,15 @@ public:
 	TextComponent(int width, int height, int posx, int posy);
 	~TextComponent();
 
+	void RenderText(std::string text);
+
 protected:
 	_json LoadTextLayout(std::wstring filename);
 	void ConstructFont(UIContainer rawText, _json layout);
 
-	std::map<std::string, UIContainer*> dictionary;
+	std::map<char, UIContainer*> dictionary;
+
+	bool hasUppercase;
 
 private:
 };

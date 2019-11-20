@@ -173,6 +173,11 @@ void UIContainer::Imprint(UIContainer& stamp) {
 	}
 }
 
+void UIContainer::Clear() {
+	
+	std::fill_n(UIdata, dataWidth * dataHeight, 0);
+}
+
 // imprint the right-hand container onto the left-hand container
 UIContainer operator<< (UIContainer& lhs, UIContainer& rhs) {
 

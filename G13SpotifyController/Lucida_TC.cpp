@@ -1,8 +1,8 @@
-#include "LC_TextComponent.h"
+#include "Lucida_TC.h"
 
 
 
-LC_TextComponent::LC_TextComponent(int width, int posx, int posy)
+Lucida_TC::Lucida_TC(int width, int posx, int posy)
 	: TextComponent(width, 11, posx, posy)
 {
 	// load text
@@ -16,6 +16,6 @@ LC_TextComponent::LC_TextComponent(int width, int posx, int posy)
 }
 
 
-LC_TextComponent::~LC_TextComponent()
+Lucida_TC::~Lucida_TC()
 {
 }

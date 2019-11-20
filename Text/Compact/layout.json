@@ -1,7 +1,7 @@
 {
-	"text" 		: "Lucida Sans",
-	"has_case" 	: true,
-	"height" 	: 11,
+	"text" 		: "Compact",
+	"has_case" 	: false,
+	"height" 	: 7,
 	"layout" : [
 
 		{
@@ -106,110 +106,6 @@
 		},
 		{
 			"char" : "z",
-			"kerning" : 1
-		},
-		{
-			"char" : "A",
-			"kerning" : 1
-		},
-		{
-			"char" : "B",
-			"kerning" : 1
-		},
-		{
-			"char" : "C",
-			"kerning" : 1
-		},
-		{
-			"char" : "D",
-			"kerning" : 1
-		},
-		{
-			"char" : "E",
-			"kerning" : 1
-		},
-		{
-			"char" : "F",
-			"kerning" : 1
-		},
-		{
-			"char" : "G",
-			"kerning" : 1
-		},
-		{
-			"char" : "H",
-			"kerning" : 1
-		},
-		{
-			"char" : "I",
-			"kerning" : 1
-		},
-		{
-			"char" : "J",
-			"kerning" : 1
-		},
-		{
-			"char" : "K",
-			"kerning" : 1
-		},
-		{
-			"char" : "L",
-			"kerning" : 1
-		},
-		{
-			"char" : "M",
-			"kerning" : 1
-		},
-		{
-			"char" : "N",
-			"kerning" : 1
-		},
-		{
-			"char" : "O",
-			"kerning" : 1
-		},
-		{
-			"char" : "P",
-			"kerning" : 1
-		},
-		{
-			"char" : "Q",
-			"kerning" : 1
-		},
-		{
-			"char" : "R",
-			"kerning" : 1
-		},
-		{
-			"char" : "S",
-			"kerning" : 1
-		},
-		{
-			"char" : "T",
-			"kerning" : 1
-		},
-		{
-			"char" : "U",
-			"kerning" : 1
-		},
-		{
-			"char" : "V",
-			"kerning" : 1
-		},
-		{
-			"char" : "W",
-			"kerning" : 1
-		},
-		{
-			"char" : "X",
-			"kerning" : 1
-		},
-		{
-			"char" : "Y",
-			"kerning" : 1
-		},
-		{
-			"char" : "Z",
 			"kerning" : 1
 		},
 		{

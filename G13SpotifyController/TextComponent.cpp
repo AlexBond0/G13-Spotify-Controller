@@ -33,13 +33,17 @@ void TextComponent::ConstructFont(UIContainer rawText, _json layout) {
 
 	int textHeight = layout["height"];
 	int textWidth = 0;
+	int kerning = 0;
 
 	int startColumn = 0;
 	int endColumn = 0;
+
+	std::string stringChar;
 	char newChar;
 
 	UIContainer* currentUIContainer;
 
+	hasUppercase = layout["has_case"];
 
 	for (_json character : layout["layout"]) {
 
@@ -53,20 +57,22 @@ void TextComponent::ConstructFont(UIContainer rawText, _json layout) {
 		}
 
 		// calculate width and accound for gap between characters
-		textWidth = endColumn - startColumn - 1;
+		kerning = character["kerning"];
+		textWidth = endColumn - startColumn - 1 + kerning;
 
 		// create the new UIContainer
-		dictionary[character["char"]] = new UIContainer(
+		newChar = (character["char"].get<std::string>()).at(0);
+		dictionary[newChar] = new UIContainer(
 			textWidth,
 			textHeight,
 			0,
 			0
 		);
-		currentUIContainer = dictionary[character["char"]];
+		currentUIContainer = dictionary[newChar];
 
 		// copy over the pixels
 		for (int x = 0; x < textWidth; x++) {
-			for (int y = 1; y < textHeight; y++) {
+			for (int y = 1; y <= textHeight; y++) {
 
 				currentUIContainer->SetPixel(
 					x,
@@ -78,6 +84,51 @@ void TextComponent::ConstructFont(UIContainer rawText, _json layout) {
 
 		startColumn = endColumn;
 	}
+}
 
-	int a = 0;
+void TextComponent::RenderText(std::string text) {
+
+	// clear current component
+	_ui.Clear();
+
+	int currentColumn = 0;
+	UIContainer* container;
+
+	// loop over each letter (also exit if ran out of space)
+	for (char letter : text) {
+
+		// space
+		if (letter == ' ') {
+
+			currentColumn += 4;
+		}
+
+		else {
+
+			// account for no upper case
+			if (!hasUppercase)
+				letter = tolower(letter);
+
+			// unknown character
+			if (!dictionary[letter])
+				letter = '?';
+
+			container = dictionary[letter];
+
+			// loop over character container
+			BYTE pixel;
+			for (int x = 0; x < container->GetWidth(); x++) {
+				for (int y = 0; y < container->GetHeight(); y++) {
+
+					pixel = container->GetPixel(x, y);
+
+					if (pixel >= 128)
+						_ui.SetPixel(x + currentColumn, y, pixel);
+				}
+			}
+
+			// move the column along
+			currentColumn += container->GetWidth();
+		}
+	}
 }
