@@ -99,7 +99,9 @@ void Window::CreateContainers() {
 
 	// components.push_back(new Component(L"exampleUI.bmp", 0, 0));
 
-	components.push_back(new Component(L"SmallCircle.bmp", 0, 0));
+	/*components.push_back(new Component(L"SmallCircle.bmp", 0, 0));
 	components.push_back(new Component(L"SmallCircle.bmp", 10, 12));
-	components.push_back(new Component(L"SmallCircle.bmp", 5, 5));
+	components.push_back(new Component(L"SmallCircle.bmp", 5, 5));*/
+
+	components.push_back(new LC_TextComponent(40, 0, 0));
 } 

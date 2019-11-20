@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="G13Container.cpp" />
+    <ClCompile Include="LC_TextComponent.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Requester.cpp" />
     <ClCompile Include="TextComponent.cpp" />
@@ -143,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="Component.h" />
     <ClInclude Include="G13Container.h" />
+    <ClInclude Include="LC_TextComponent.h" />
     <ClInclude Include="Requester.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Tools.h" />

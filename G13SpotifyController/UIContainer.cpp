@@ -22,6 +22,21 @@ UIContainer::UIContainer(std::wstring filename, int posx, int posy) {
 	positionX = posx;
 	positionY = posy;
 
+	LoadFile(filename);
+}
+
+UIContainer::UIContainer(std::wstring filename) {
+
+	// save position
+	positionX = 0;
+	positionY = 0;
+
+	LoadFile(filename);
+}
+
+
+void UIContainer::LoadFile(std::wstring filename) {
+
 	// Start Gdiplus 
 	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
 	Gdiplus::GdiplusStartup(&g_gdiplusToken, &gdiplusStartupInput, NULL);

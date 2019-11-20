@@ -17,6 +17,7 @@ class UIContainer
 public:
 	UIContainer(int width, int height, int posx, int posy);
 	UIContainer(std::wstring filename, int posx, int posy);
+	UIContainer(std::wstring filename);
 	~UIContainer();
 
 	void Imprint(UIContainer& stamp);
@@ -32,6 +33,8 @@ public:
 	int GetPosY();
 
 private:
+
+	void LoadFile(std::wstring filename);
 
 	ULONG_PTR g_gdiplusToken;
 

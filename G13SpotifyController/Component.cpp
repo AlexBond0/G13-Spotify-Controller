@@ -14,6 +14,12 @@ Component::Component(std::wstring filename, int posx, int posy)
 
 }
 
+Component::Component(std::wstring filename)
+	: _ui(filename)
+{
+
+}
+
 Component::~Component()
 {
 }

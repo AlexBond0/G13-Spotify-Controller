@@ -13,7 +13,7 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Containers">
+    <Filter Include="Components">
       <UniqueIdentifier>{c02694d0-d16e-4616-bcbb-b87ba3181248}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -30,17 +30,20 @@
     <ClCompile Include="Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="G13Container.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="UIContainer.cpp">
-      <Filter>Containers</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
-      <Filter>Containers</Filter>
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="G13Container.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="TextComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LC_TextComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,17 +59,20 @@
     <ClInclude Include="Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="G13Container.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UIContainer.h">
-      <Filter>Containers</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Containers</Filter>
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="G13Container.h">
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="TextComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LC_TextComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
