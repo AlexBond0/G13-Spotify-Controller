@@ -63,6 +63,9 @@
     <ClCompile Include="Component.cpp">
       <Filter>Components\Base</Filter>
     </ClCompile>
+    <ClCompile Include="ProgressBar_C.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -102,6 +105,9 @@
       <Filter>Components\Base</Filter>
     </ClInclude>
     <ClInclude Include="G13.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressBar_C.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

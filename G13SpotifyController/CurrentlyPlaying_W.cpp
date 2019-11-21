@@ -16,12 +16,12 @@ void CurrentlyPlaying_W::CreateContainers() {
 
 	// main song title text
 	TextComponent* text = new Lucida_TC(LOGI_LCD_MONO_WIDTH -1, 1, 0);
-	text->RenderText("A really long song name that keeps going and going");
+	text->RenderText("NIT3 TALES MIX");
 	components["title"] = text;
 
 	// artist title text
 	text = new Compact_TC(LOGI_LCD_MONO_WIDTH -1, 1, 11);
-	text->RenderText("A guy on spotify with a long name lol its a really long one");
+	text->RenderText("SHIFT K3Y, DJ Zinc, MJ Cole, Chris Lorenzo");
 	components["artist"] = text;
 
 	// sepearting bar
@@ -33,5 +33,14 @@ void CurrentlyPlaying_W::CreateContainers() {
 		BarType::DOTTED
 	);
 	components["topBar"] = bar;
+
+	// loading bar
+	ProgressBar_C* loadBar = new ProgressBar_C(
+		LOGI_LCD_MONO_WIDTH - 8,
+		4,
+		30
+	);
+	loadBar->SetProgress(0.3);
+	components["loadBar"] = loadBar;
 }
 

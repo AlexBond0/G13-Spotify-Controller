@@ -3,3 +3,4 @@
 #include "Lucida_TC.h"
 #include "Compact_TC.h"
 #include "Bar_C.h"
+#include "ProgressBar_C.h"
