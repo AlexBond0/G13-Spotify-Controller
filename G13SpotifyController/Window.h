@@ -4,6 +4,7 @@
 #include <string>
 #include <LogitechLCDLib.h>
 #include <vector>
+#include <map>
 
 #include "Tools.h"
 #include "G13.h"
@@ -27,7 +28,7 @@ protected:
 	bool BTN2;
 	bool BTN3;
 
-	std::vector<Component*> components;
+	std::map<std::string, Component*> components;
 
 private:
 

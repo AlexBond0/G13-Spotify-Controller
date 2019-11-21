@@ -7,8 +7,8 @@ Window::Window() {
 
 Window::~Window() {
 
-	for (Component* c : components)
-		delete c;
+	for (std::pair<std::string, Component*> c : components)
+		delete c.second;
 }
 
 void Window::Run() {
@@ -83,8 +83,8 @@ void Window::Render() {
 	G13Container screen = G13Container();
 
 	// render all active components
-	for (Component* c : components)
-		c->Render(&screen);
+	for (std::pair<std::string, Component*> c : components)
+		c.second->Render(&screen);
 
 	// send screen data to the G13
 	bool worked = LogiLcdMonoSetBackground(screen.GetContainer());

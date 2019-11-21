@@ -96,10 +96,16 @@ void TextComponent::RenderText(std::string text) {
 	_ui.Clear();
 
 	int currentColumn = 0;
+	int renderableWidth;
+	int width = _ui.GetWidth();
 	UIContainer* container;
 
-	// loop over each letter (also exit if ran out of space)
+	// loop over each letter
 	for (char letter : text) {
+
+		// exit if ran out of space
+		if (currentColumn >= width)
+			return;
 
 		// space
 		if (letter == ' ') {
@@ -119,9 +125,16 @@ void TextComponent::RenderText(std::string text) {
 
 			container = dictionary[letter];
 
+			// calculate renderable size of character
+			renderableWidth = (
+				container->GetWidth() + currentColumn <= width
+				? container->GetWidth()
+				: width - currentColumn
+			);
+
 			// loop over character container
 			BYTE pixel;
-			for (int x = 0; x < container->GetWidth(); x++) {
+			for (int x = 0; x < renderableWidth; x++) {
 				for (int y = 0; y < container->GetHeight(); y++) {
 
 					pixel = container->GetPixel(x, y);
