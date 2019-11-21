@@ -138,6 +138,7 @@
     <ClCompile Include="ProgressBar_C.cpp" />
     <ClCompile Include="Requester.cpp" />
     <ClCompile Include="TextComponent.cpp" />
+    <ClCompile Include="Timer_C.cpp" />
     <ClCompile Include="Tools.cpp" />
     <ClCompile Include="UIContainer.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="ProgressBar_C.h" />
     <ClInclude Include="Requester.h" />
     <ClInclude Include="TextComponent.h" />
+    <ClInclude Include="Timer_C.h" />
     <ClInclude Include="Tools.h" />
     <ClInclude Include="UIContainer.h" />
     <ClInclude Include="Window.h" />

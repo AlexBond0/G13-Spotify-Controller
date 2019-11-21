@@ -66,6 +66,9 @@
     <ClCompile Include="ProgressBar_C.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Timer_C.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -109,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="ProgressBar_C.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer_C.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

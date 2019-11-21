@@ -38,9 +38,16 @@ void CurrentlyPlaying_W::CreateContainers() {
 	ProgressBar_C* loadBar = new ProgressBar_C(
 		LOGI_LCD_MONO_WIDTH - 8,
 		4,
-		30
+		37
 	);
 	loadBar->SetProgress(0.3);
 	components["loadBar"] = loadBar;
+
+	// timers
+	Timer_C* timer = new Timer_C(3, 29, 150);
+	components["timerA"] = timer;
+
+	timer = new Timer_C(140, 29, 270);
+	components["timerB"] = timer;
 }
 
