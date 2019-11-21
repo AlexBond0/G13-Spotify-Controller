@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bar_C.cpp" />
     <ClCompile Include="Compact_TC.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CurrentlyPlaying_W.cpp" />
@@ -144,6 +145,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bar_C.h" />
     <ClInclude Include="Compact_TC.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="CurrentlyPlaying_W.h" />

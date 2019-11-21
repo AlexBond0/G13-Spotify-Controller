@@ -4,6 +4,7 @@
 CurrentlyPlaying_W::CurrentlyPlaying_W() {
 
 	CreateContainers();
+	Run();
 }
 
 
@@ -13,19 +14,24 @@ CurrentlyPlaying_W::~CurrentlyPlaying_W()
 
 void CurrentlyPlaying_W::CreateContainers() {
 
-
-	components.push_back(new Component(L"SmallCircle.bmp", 100, 20));
-	components.push_back(new Component(L"SmallCircle.bmp", 70, 30));
-	components.push_back(new Component(L"SmallCircle.bmp", 120, 15));
-
-	TextComponent* text = new Lucida_TC(100, 0, 0);
-	text->RenderText("A song on spotify :)");
+	// main song title text
+	TextComponent* text = new Lucida_TC(LOGI_LCD_MONO_WIDTH -1, 1, 0);
+	text->RenderText("A really long song name that keeps going and going");
 	components.push_back(text);
 
-	text = new Compact_TC(100, 0, 20);
-	text->RenderText("A song on spotify :)");
+	// artist title text
+	text = new Compact_TC(LOGI_LCD_MONO_WIDTH -1, 1, 11);
+	text->RenderText("A guy on spotify with a long name lol its a really long one");
 	components.push_back(text);
 
-	Run();
+	// sepearting bar
+	Component* bar = new Bar_C(
+		0, 
+		18, 
+		Direction::HORIZONTAL, 
+		LOGI_LCD_MONO_WIDTH - 1,
+		BarType::DOTTED
+	);
+	components.push_back(bar);
 }
 

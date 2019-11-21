@@ -10,8 +10,6 @@
  using namespace Gdiplus;
  #pragma comment(lib,"gdiplus.lib")
 
-
-
 class UIContainer
 {
 public:
@@ -32,6 +30,9 @@ public:
 	int GetHeight();
 	int GetPosX();
 	int GetPosY();
+
+	const BYTE PIXEL_ON = 255;
+	const BYTE PIXEL_OFF = 0;
 
 private:
 
