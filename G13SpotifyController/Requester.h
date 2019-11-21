@@ -24,7 +24,7 @@ using namespace web::http;                  // Common HTTP functionality
 using namespace web::http::client;          // HTTP client features
 using namespace concurrency::streams;       // Asynchronous streams
 
-using jsonpp = nlohmann::json;
+using _json = nlohmann::json;
 
 class Requester
 {
@@ -32,13 +32,19 @@ public:
 	Requester();
 	~Requester();
 
-	static void OpenSpotifyLogin();
-	static void TestRequest();
+	bool Initiate();
+
+	void OpenSpotifyLogin();
+	void TestRequest();
+
+	_json GetCurrentPlayback();
 
 private:
 
-	static std::string ACCESS_TOKEN;
-	static std::string REFRESH_TOKEN;
+	std::string ACCESS_TOKEN;
+	std::string REFRESH_TOKEN;
+
+	void ReadTokens();
 
 };
 

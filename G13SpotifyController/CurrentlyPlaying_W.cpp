@@ -1,9 +1,13 @@
 #include "CurrentlyPlaying_W.h"
 
 
-CurrentlyPlaying_W::CurrentlyPlaying_W() {
+CurrentlyPlaying_W::CurrentlyPlaying_W(Requester* requester) {
 
-	CreateContainers();
+	spotify = requester;
+
+	_json currentPlayback = spotify->GetCurrentPlayback();
+	CreateContainers(currentPlayback);
+
 	Run();
 }
 
@@ -12,42 +16,54 @@ CurrentlyPlaying_W::~CurrentlyPlaying_W()
 {
 }
 
-void CurrentlyPlaying_W::CreateContainers() {
+void CurrentlyPlaying_W::CreateContainers(_json currentPlayback) {
 
-	// main song title text
-	TextComponent* text = new Lucida_TC(LOGI_LCD_MONO_WIDTH -1, 1, 0);
-	text->RenderText("NIT3 TALES MIX");
-	components["title"] = text;
+	if (currentPlayback["is_playing"]) {
 
-	// artist title text
-	text = new Compact_TC(LOGI_LCD_MONO_WIDTH -1, 1, 11);
-	text->RenderText("SHIFT K3Y, DJ Zinc, MJ Cole, Chris Lorenzo");
-	components["artist"] = text;
+		// main song title text
+		TextComponent* text = new Lucida_TC(LOGI_LCD_MONO_WIDTH - 1, 1, 0);
+		text->RenderText(currentPlayback["item"]["name"]);
+		components["title"] = text;
 
-	// sepearting bar
-	Component* bar = new Bar_C(
-		1, 
-		18, 
-		Direction::HORIZONTAL, 
-		LOGI_LCD_MONO_WIDTH - 1,
-		BarType::DOTTED
-	);
-	components["topBar"] = bar;
+		// artist title text
+		text = new Compact_TC(LOGI_LCD_MONO_WIDTH - 1, 1, 11);
+		text->RenderText(currentPlayback["item"]["artists"][0]["name"]);
+		components["artist"] = text;
 
-	// loading bar
-	ProgressBar_C* loadBar = new ProgressBar_C(
-		LOGI_LCD_MONO_WIDTH - 8,
-		4,
-		37
-	);
-	loadBar->SetProgress(0.3);
-	components["loadBar"] = loadBar;
+		// sepearting bar
+		Component* bar = new Bar_C(
+			1,
+			18,
+			Direction::HORIZONTAL,
+			LOGI_LCD_MONO_WIDTH - 1,
+			BarType::DOTTED
+		);
+		components["topBar"] = bar;
 
-	// timers
-	Timer_C* timer = new Timer_C(3, 29, 150);
-	components["timerA"] = timer;
+		// calculate time diffs
+		int songLength = currentPlayback["item"]["duration_ms"];
+		int progress = currentPlayback["progress_ms"];
 
-	timer = new Timer_C(140, 29, 270);
-	components["timerB"] = timer;
+		// stops a divide by zero situation
+		// and song playback is in ms so no accuracy lost
+		progress++;
+		float precentageThrough = (float)progress / (float)songLength;
+
+		// loading bar(float)
+		ProgressBar_C* loadBar = new ProgressBar_C(
+			LOGI_LCD_MONO_WIDTH - 8,
+			4,
+			37
+		);
+		loadBar->SetProgress(precentageThrough);
+		components["loadBar"] = loadBar;
+
+		// timers
+		Timer_C* timer = new Timer_C(3, 29, progress / 1000);
+		components["timerA"] = timer;
+
+		timer = new Timer_C(140, 29, ((songLength - progress) / 1000));
+		components["timerB"] = timer;
+	}
 }
 

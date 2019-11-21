@@ -13,7 +13,7 @@ UIContainer::UIContainer(int width, int height, int posx, int posy) {
 	positionX = posx;
 	positionY = posy;
 
-
+	inverted = false;
 }
 
 UIContainer::UIContainer(std::wstring filename, int posx, int posy) {
@@ -165,6 +165,11 @@ void UIContainer::Imprint(UIContainer& stamp) {
 			relativeX = rhx + offsetX;
 			relativeY = rhy + offsetY;
 			pixel = stamp.GetPixel(rhx, rhy);
+
+			// apply inversion if needed
+			if (stamp.inverted) {
+				pixel = 255 - pixel;
+			}
 
 			// set pixel in the left hand container according to offsets
 			if (pixel >= 128)

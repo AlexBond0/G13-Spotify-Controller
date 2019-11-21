@@ -34,6 +34,8 @@ public:
 	const BYTE PIXEL_ON = 255;
 	const BYTE PIXEL_OFF = 0;
 
+	bool inverted;
+
 private:
 
 	void LoadFile(std::wstring filename);

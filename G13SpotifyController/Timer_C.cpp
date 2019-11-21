@@ -3,10 +3,11 @@
 
 
 Timer_C::Timer_C(int posx, int posy, int startSeconds)
-	: Compact_TC(19, posx, posy)
+	: Compact_TC(18, posx, posy)
 {
 
 	SetTime(startSeconds);
+	// _ui.inverted = true;
 }
 
 

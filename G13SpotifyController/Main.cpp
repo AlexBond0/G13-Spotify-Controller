@@ -17,10 +17,17 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmd, int show)
 	bool ret = LogiLcdInit(&message[0], LOGI_LCD_TYPE_MONO);
 	OutputDebugString((ret == TRUE) ? "\nCONNECTED" : "\nNOT CONNECTED");
 
-	// Requester::TestRequest();
+	Requester* spotify = new Requester();
 
-	Window w = CurrentlyPlaying_W();
+	// make sure user credentials are valid
+	if (!spotify->Initiate()) {
 
+		spotify->OpenSpotifyLogin();
+	}
+
+	Window w = CurrentlyPlaying_W(spotify);
+
+	delete spotify;
 	LogiLcdShutdown();
 	return 0;
 }
