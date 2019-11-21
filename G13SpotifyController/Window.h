@@ -10,8 +10,9 @@
 #include "G13.h"
 
 
-#define RENDER_TIMER 1001
-#define INPUT_TIMER 1002
+#define RENDER_TIMER	1001
+#define INPUT_TIMER		1002
+#define API_POLL_TIMER	1003
 
 class Window
 {
@@ -30,13 +31,19 @@ protected:
 
 	std::map<std::string, Component*> components;
 
+	virtual void Render();
+	virtual void APIPoll() {};
+
 private:
 
 	int renderTimer;
 	int inputTimer;
+	int apiPollTimer;
 
 	LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	void CheckInput();
-	void Render();
+
+	G13Container backBuffer;
+	G13Container frontBuffer;
 };
 

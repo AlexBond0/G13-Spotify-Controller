@@ -15,7 +15,8 @@ void Window::Run() {
 
 	// setup the render & input scheduler
 	renderTimer = SetTimer(NULL, RENDER_TIMER, 500, NULL);
-	inputTimer = SetTimer(NULL, INPUT_TIMER, 500, NULL);
+	inputTimer = SetTimer(NULL, INPUT_TIMER, 50, NULL);
+	apiPollTimer = SetTimer(NULL, INPUT_TIMER, 5000, NULL);
 
 	// create a message loop for the renderer
 	MSG msg;
@@ -39,6 +40,7 @@ void Window::Run() {
 
 	KillTimer(NULL, renderTimer);
 	KillTimer(NULL, inputTimer);
+	KillTimer(NULL, apiPollTimer);
 }
 
 LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -55,6 +57,9 @@ LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
 
 		else if (timerid == renderTimer)
 			Render();
+
+		else if (timerid == apiPollTimer)
+			APIPoll();
 
 		break;
 	}

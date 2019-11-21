@@ -15,5 +15,21 @@ public:
 private:
 
 	Requester* spotify;
+	_json currentPlayback;
+
+	std::string currentTrackID;
+
+	int jsonProgress;
+	int jsonSongLength;
+
+	int previousTime;
+	int newTime;
+	int currentTimePassed;
+
+	void Render();
+	void APIPoll();
+
+	float CalculateSongProgress(int timePassed);
+	void UpdateSongContainers();
 };
 

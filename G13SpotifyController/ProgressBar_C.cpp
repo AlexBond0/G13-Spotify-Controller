@@ -41,8 +41,10 @@ void ProgressBar_C::ConstructBar() {
 
 	for (int fp = 0; fp < pixelsToFill; fp++) {
 
+		_ui.SetPixel(fp, 0, _ui.PIXEL_OFF);
 		_ui.SetPixel(fp, 1, _ui.PIXEL_ON);
 		_ui.SetPixel(fp, 2, _ui.PIXEL_ON);
+		_ui.SetPixel(fp, 3, _ui.PIXEL_OFF);
 	}
 
 	// render filled cap
@@ -50,11 +52,14 @@ void ProgressBar_C::ConstructBar() {
 		_ui.SetPixel(pixelsToFill, fc, _ui.PIXEL_ON);
 
 	// render unfilled bar
-	bool flipper = true;
+	bool flipper = (pixelsToFill % 2 == 1 ? true : false);
 	for (int fp = pixelsToFill + 1; fp < barWidth; fp++) {
 
+		_ui.SetPixel(fp, 0, _ui.PIXEL_OFF);
 		_ui.SetPixel(fp, 1, (flipper ? _ui.PIXEL_ON : _ui.PIXEL_OFF));
 		_ui.SetPixel(fp, 2, (flipper ? _ui.PIXEL_OFF : _ui.PIXEL_ON));
+		_ui.SetPixel(fp, 3, _ui.PIXEL_OFF);
+
 		flipper = !flipper;
 	}
 
