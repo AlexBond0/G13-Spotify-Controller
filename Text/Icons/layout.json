@@ -1,0 +1,19 @@
+{
+	"height" 	: 8,
+	"layout" : [
+		"shuffle_on",
+		"shuffle_off",
+		"repeat_on",
+		"repeat_off",
+		"repeat_once",
+		"skip_fwd",
+		"skip_bwd",
+		"play",
+		"pause",
+		"like_off",
+		"like_on",
+		"playlist",
+		"album",
+		"artist"
+	]
+}

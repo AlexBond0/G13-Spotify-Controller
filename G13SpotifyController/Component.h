@@ -2,6 +2,9 @@
 
 #include "UIContainer.h"
 
+#include <cpprest/filestream.h>
+#include <nlohmann/json.hpp>
+using _json = nlohmann::json;
 
 class Component
 {

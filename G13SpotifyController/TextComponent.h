@@ -1,9 +1,5 @@
 #pragma once
 
-#include <cpprest/filestream.h>
-#include <nlohmann/json.hpp>
-using _json = nlohmann::json;
-
 #include <vector>
 #include <map>
 

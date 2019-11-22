@@ -13,6 +13,8 @@ Compact_TC::Compact_TC(int width, int posx, int posy)
 
 	// create individual containers for each char
 	ConstructFont(*rawText, textLayout);
+
+	// delete rawText;
 }
 
 Compact_TC::~Compact_TC()

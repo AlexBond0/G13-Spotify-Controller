@@ -49,23 +49,32 @@ void CurrentlyPlaying_W::CreateContainers(_json currentPlayback) {
 		ProgressBar_C* loadBar = new ProgressBar_C(
 			LOGI_LCD_MONO_WIDTH - 8,
 			4,
-			37
+			30
 		);
 		loadBar->SetProgress(CalculateSongProgress(0));
 		components["loadBar"] = loadBar;
 
 		// timers
-		Timer_C* timer = new Timer_C(3, 29, progress / 1000);
+		Timer_C* timer = new Timer_C(3, 22, progress / 1000);
 		components["timerA"] = timer;
 
-		timer = new Timer_C(140, 29, ((songLength - progress) / 1000));
+		timer = new Timer_C(140, 22, ((songLength - progress) / 1000));
 		components["timerB"] = timer;
 
 		// icons
-		Icon_C* play = new Icon_C(10, 10, 50, 30);
-		play->AddValue("circle", L"SmallCircle.bmp");
-		play->SetValue("circle");
+		Icon_C::LoadIcons();
+
+		Icon_C* shuffle = new Icon_C(10, 10, 60, 34);
+		shuffle->SetValue("shuffle_on");
+		components["shuffle"] = shuffle;
+
+		Icon_C* play = new Icon_C(10, 10, 75, 34);
+		play->SetValue("play");
 		components["play"] = play;
+
+		Icon_C* replay = new Icon_C(10, 10, 84, 34);
+		replay->SetValue("repeat_on");
+		components["replay"] = replay;
 	}
 }
 
