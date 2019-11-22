@@ -68,9 +68,7 @@ void TextComponent::ConstructFont(UIContainer rawText, _json layout) {
 		newChar = (character["char"].get<std::string>()).at(0);
 		dictionary[newChar] = new UIContainer(
 			textWidth,
-			textHeight,
-			0,
-			0
+			textHeight
 		);
 		currentUIContainer = dictionary[newChar];
 

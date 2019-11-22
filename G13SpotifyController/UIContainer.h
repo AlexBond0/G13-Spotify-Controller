@@ -13,12 +13,11 @@
 class UIContainer
 {
 public:
-	UIContainer(int width, int height, int posx, int posy);
-	UIContainer(std::wstring filename, int posx, int posy);
+	UIContainer(int width, int height);
 	UIContainer(std::wstring filename);
 	~UIContainer();
 
-	void Imprint(UIContainer& stamp);
+	void Imprint(UIContainer& stamp, int x, int y);
 	void Clear();
 
 	bool SetPixel(int x, int y, BYTE state);
@@ -28,8 +27,8 @@ public:
 
 	int GetWidth();
 	int GetHeight();
-	int GetPosX();
-	int GetPosY();
+	// int GetPosX();
+	// int GetPosY();
 
 	const BYTE PIXEL_ON = 255;
 	const BYTE PIXEL_OFF = 0;
@@ -46,8 +45,8 @@ private:
 
 	int dataWidth;
 	int dataHeight;
-	int positionX;
-	int positionY;
+	// int positionX;
+	// int positionY;
 };
 
 UIContainer operator<< (UIContainer& lhs, UIContainer& rhs);

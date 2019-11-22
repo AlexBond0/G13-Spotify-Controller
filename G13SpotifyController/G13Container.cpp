@@ -3,7 +3,7 @@
 
 
 G13Container::G13Container() 
-	: UIContainer(G13_WIDTH, G13_HEIGHT, 0, 0)
+	: UIContainer(G13_WIDTH, G13_HEIGHT)
 {
 
 

@@ -20,7 +20,7 @@ Icon_C::~Icon_C() {
 
 void Icon_C::AddValue(std::string name, std::wstring filename) {
 
-	UIContainer* newValue = new UIContainer(filename, _ui.GetPosX(), _ui.GetPosY());
+	UIContainer* newValue = new UIContainer(filename);
 	value[name] = newValue;
 }
 
@@ -31,5 +31,5 @@ void Icon_C::AddValue(std::string name, UIContainer* container) {
 
 void Icon_C::SetValue(std::string name) {
 
-	_ui.Imprint(*value[name]);
+	_ui.Imprint(*value[name], 0, 0);
 }

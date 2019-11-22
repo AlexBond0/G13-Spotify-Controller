@@ -3,15 +3,17 @@
 
 
 Component::Component(int width, int height, int posx, int posy)
-	: _ui(width, height, posx, posy)
+	: _ui(width, height)
 {
-
+	positionX = posx;
+	positionY = posy;
 }
 
 Component::Component(std::wstring filename, int posx, int posy) 
-	: _ui(filename, posx, posy)
+	: _ui(filename)
 {
-
+	positionX = posx;
+	positionY = posy;
 }
 
 Component::Component(std::wstring filename)
@@ -27,5 +29,5 @@ Component::~Component()
 
 void Component::Render(UIContainer* screen) {
 
-	screen->Imprint(_ui);
+	screen->Imprint(_ui, positionX, positionY);
 }

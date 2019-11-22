@@ -16,6 +16,9 @@ public:
 protected:
 
 	UIContainer _ui;
+
+	int positionX;
+	int positionY;
 	
 };
 
