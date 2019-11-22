@@ -25,6 +25,9 @@
     <Filter Include="Components\Base">
       <UniqueIdentifier>{85ef9abf-f763-4f46-96b6-404f9028ff09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\UI">
+      <UniqueIdentifier>{7408698f-a92e-4630-881f-94afaf3f303e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -51,9 +54,6 @@
     <ClCompile Include="CurrentlyPlaying_W.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
-    <ClCompile Include="Bar_C.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="G13Container.cpp">
       <Filter>Components\Base</Filter>
     </ClCompile>
@@ -63,11 +63,17 @@
     <ClCompile Include="Component.cpp">
       <Filter>Components\Base</Filter>
     </ClCompile>
+    <ClCompile Include="Bar_C.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Icon_C.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
     <ClCompile Include="ProgressBar_C.cpp">
-      <Filter>Components</Filter>
+      <Filter>Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="Timer_C.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,9 +101,6 @@
     <ClInclude Include="CurrentlyPlaying_W.h">
       <Filter>Windows</Filter>
     </ClInclude>
-    <ClInclude Include="Bar_C.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="G13Container.h">
       <Filter>Components\Base</Filter>
     </ClInclude>
@@ -110,11 +113,17 @@
     <ClInclude Include="G13.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Bar_C.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Icon_C.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
     <ClInclude Include="ProgressBar_C.h">
-      <Filter>Components</Filter>
+      <Filter>Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Timer_C.h">
-      <Filter>Header Files</Filter>
+      <Filter>Components\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

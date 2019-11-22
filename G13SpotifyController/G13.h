@@ -5,3 +5,4 @@
 #include "Bar_C.h"
 #include "ProgressBar_C.h"
 #include "Timer_C.h"
+#include "Icon_C.h"

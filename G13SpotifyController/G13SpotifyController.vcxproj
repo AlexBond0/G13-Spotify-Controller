@@ -133,6 +133,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CurrentlyPlaying_W.cpp" />
     <ClCompile Include="G13Container.cpp" />
+    <ClCompile Include="Icon_C.cpp" />
     <ClCompile Include="Lucida_TC.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ProgressBar_C.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="CurrentlyPlaying_W.h" />
     <ClInclude Include="G13.h" />
     <ClInclude Include="G13Container.h" />
+    <ClInclude Include="Icon_C.h" />
     <ClInclude Include="Lucida_TC.h" />
     <ClInclude Include="ProgressBar_C.h" />
     <ClInclude Include="Requester.h" />

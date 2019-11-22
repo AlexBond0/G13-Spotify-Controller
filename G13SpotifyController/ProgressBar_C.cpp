@@ -39,7 +39,7 @@ void ProgressBar_C::ConstructBar() {
 	else
 		pixelsToFill = 0;
 
-	for (int fp = 0; fp < pixelsToFill; fp++) {
+	for (int fp = 1; fp < pixelsToFill; fp++) {
 
 		_ui.SetPixel(fp, 0, _ui.PIXEL_OFF);
 		_ui.SetPixel(fp, 1, _ui.PIXEL_ON);

@@ -60,6 +60,12 @@ void CurrentlyPlaying_W::CreateContainers(_json currentPlayback) {
 
 		timer = new Timer_C(140, 29, ((songLength - progress) / 1000));
 		components["timerB"] = timer;
+
+		// icons
+		Icon_C* play = new Icon_C(10, 10, 50, 30);
+		play->AddValue("circle", L"SmallCircle.bmp");
+		play->SetValue("circle");
+		components["play"] = play;
 	}
 }
 
