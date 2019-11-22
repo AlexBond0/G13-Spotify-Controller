@@ -35,9 +35,14 @@ var generateRandomString = function(length) {
   return text;
 };
 
-var saveAccessAndRefreshTokens = (Access, Refresh) => {
+var saveAccessAndRefreshTokens = (body) => {
 
-  var tokens = Access + " " + Refresh;
+  // retreive tokens from responce body
+  var access_token  = body.access_token,
+      refresh_token = body.refresh_token,
+      expires_in    = body.expires_in;
+
+  var tokens = access_token + " " + refresh_token + " " + expires_in;
 
   fs.writeFile("../G13SpotifyController/tokens.txt", tokens, function(err) {
 
@@ -115,11 +120,12 @@ app.get('/callback', function(req, res) {
       if (!error && response.statusCode === 200) {
 
         // retreive tokens from responce body
-        var access_token = body.access_token,
-            refresh_token = body.refresh_token;
+        var access_token  = body.access_token,
+            refresh_token = body.refresh_token,
+            expires_in    = body.expires_in;
 
         // save tokens fpr the G13 application to access
-        saveAccessAndRefreshTokens(access_token, refresh_token);
+        saveAccessAndRefreshTokens(body);
 
         // return user info to show we got the right one
         var options = {

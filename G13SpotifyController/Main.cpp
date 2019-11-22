@@ -20,7 +20,7 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmd, int show)
 	Requester* spotify = new Requester();
 
 	// make sure user credentials are valid
-	if (!spotify->Initiate()) {
+	if (spotify->Initiate()) {
 
 		spotify->OpenSpotifyLogin();
 	}

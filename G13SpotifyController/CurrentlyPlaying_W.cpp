@@ -24,12 +24,10 @@ void CurrentlyPlaying_W::CreateContainers(_json currentPlayback) {
 
 		// main song title text
 		TextComponent* text = new Lucida_TC(LOGI_LCD_MONO_WIDTH - 1, 1, 0);
-		// text->RenderText(currentPlayback["item"]["name"]);
 		components["title"] = text;
 
 		// artist title text
 		text = new Compact_TC(LOGI_LCD_MONO_WIDTH - 1, 1, 11);
-		// text->RenderText(currentPlayback["item"]["artists"][0]["name"]);
 		components["artist"] = text;
 
 		// sepearting bar
@@ -42,40 +40,35 @@ void CurrentlyPlaying_W::CreateContainers(_json currentPlayback) {
 		);
 		components["topBar"] = bar;
 
-		// calculate time diffs
-		// int songLength = currentPlayback["item"]["duration_ms"];
-		// int progress = currentPlayback["progress_ms"];
-
 		// loading bar
 		ProgressBar_C* loadBar = new ProgressBar_C(
 			LOGI_LCD_MONO_WIDTH - 8,
 			4,
 			30
 		);
-		// loadBar->SetProgress(CalculateSongProgress(0));
 		components["loadBar"] = loadBar;
 
 		// timers
-		Timer_C* timer = new Timer_C(3, 22); // , progress / 1000);
+		Timer_C* timer = new Timer_C(3, 22);
 		components["timerA"] = timer;
 
-		timer = new Timer_C(140, 22); // , ((songLength - progress) / 1000));
+		timer = new Timer_C(140, 22);
 		components["timerB"] = timer;
 
 		// icons
 		Icon_C::LoadIcons();
 
 		Icon_C* shuffle = new Icon_C(10, 10, 60, 34);
-		// shuffle->SetValue("shuffle_on");
 		components["shuffle"] = shuffle;
 
 		Icon_C* play = new Icon_C(10, 10, 75, 34);
-		// play->SetValue("play");
 		components["play"] = play;
 
 		Icon_C* replay = new Icon_C(10, 10, 84, 34);
-		// replay->SetValue("repeat_on");
 		components["replay"] = replay;
+
+		Icon_C* liked = new Icon_C(10, 10, 97, 34);
+		components["liked"] = liked;
 	}
 }
 
@@ -123,14 +116,25 @@ void CurrentlyPlaying_W::UpdateSongContainers() {
 		->RenderText(currentPlayback["item"]["name"]);
 
 	// artist title text
+	std::string artistList = 
+		currentPlayback["item"]["artists"][0]["name"].get<std::string>();
+
+	for (int x = 1; x < currentPlayback["item"]["artists"].size(); x++)
+		artistList += (
+			", " + 
+			currentPlayback["item"]["artists"][x]["name"].get<std::string>()
+		);
+
 	static_cast<TextComponent*>(components["artist"])
-		->RenderText(currentPlayback["item"]["artists"][0]["name"]);
+		->RenderText(artistList);
 }
 
 void CurrentlyPlaying_W::UpdatePlaybackContainers() {
 
 	// get time elapsed
-	newTime = ::GetTickCount();
+	if (currentPlayback["is_playing"])
+		newTime = ::GetTickCount();
+
 	currentTimePassed = newTime - previousTime;
 
 	// loading bar
@@ -165,4 +169,7 @@ void CurrentlyPlaying_W::UpdatePlaybackContainers() {
 
 	static_cast<Icon_C*>(components["replay"])
 		->SetValue("repeat_on");
+
+	static_cast<Icon_C*>(components["liked"])
+		->SetValue("like_off");
 }

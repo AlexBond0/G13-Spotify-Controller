@@ -1,0 +1,27 @@
+#login, 
+#loggedin {
+	display: none;
+}
+
+#login {
+	text-align: center;
+	padding-top: 10%;
+}
+
+.text-overflow {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 500px;
+}
+
+html,body { height:100%; }
+
+body {
+	background: rgb(2,0,36);
+	background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(0,255,85,1) 100%);
+}
+
+img {
+  border-radius: 50%;
+}
