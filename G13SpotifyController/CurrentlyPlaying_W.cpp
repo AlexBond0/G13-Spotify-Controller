@@ -9,6 +9,7 @@ CurrentlyPlaying_W::CurrentlyPlaying_W(Requester* requester) {
 
 	// create UI and run main loop
 	CreateContainers(currentPlayback);
+	UpdateSongContainers();
 	Run();
 }
 
@@ -23,12 +24,12 @@ void CurrentlyPlaying_W::CreateContainers(_json currentPlayback) {
 
 		// main song title text
 		TextComponent* text = new Lucida_TC(LOGI_LCD_MONO_WIDTH - 1, 1, 0);
-		text->RenderText(currentPlayback["item"]["name"]);
+		// text->RenderText(currentPlayback["item"]["name"]);
 		components["title"] = text;
 
 		// artist title text
 		text = new Compact_TC(LOGI_LCD_MONO_WIDTH - 1, 1, 11);
-		text->RenderText(currentPlayback["item"]["artists"][0]["name"]);
+		// text->RenderText(currentPlayback["item"]["artists"][0]["name"]);
 		components["artist"] = text;
 
 		// sepearting bar
@@ -42,8 +43,8 @@ void CurrentlyPlaying_W::CreateContainers(_json currentPlayback) {
 		components["topBar"] = bar;
 
 		// calculate time diffs
-		int songLength = currentPlayback["item"]["duration_ms"];
-		int progress = currentPlayback["progress_ms"];
+		// int songLength = currentPlayback["item"]["duration_ms"];
+		// int progress = currentPlayback["progress_ms"];
 
 		// loading bar
 		ProgressBar_C* loadBar = new ProgressBar_C(
@@ -51,53 +52,36 @@ void CurrentlyPlaying_W::CreateContainers(_json currentPlayback) {
 			4,
 			30
 		);
-		loadBar->SetProgress(CalculateSongProgress(0));
+		// loadBar->SetProgress(CalculateSongProgress(0));
 		components["loadBar"] = loadBar;
 
 		// timers
-		Timer_C* timer = new Timer_C(3, 22, progress / 1000);
+		Timer_C* timer = new Timer_C(3, 22); // , progress / 1000);
 		components["timerA"] = timer;
 
-		timer = new Timer_C(140, 22, ((songLength - progress) / 1000));
+		timer = new Timer_C(140, 22); // , ((songLength - progress) / 1000));
 		components["timerB"] = timer;
 
 		// icons
 		Icon_C::LoadIcons();
 
 		Icon_C* shuffle = new Icon_C(10, 10, 60, 34);
-		shuffle->SetValue("shuffle_on");
+		// shuffle->SetValue("shuffle_on");
 		components["shuffle"] = shuffle;
 
 		Icon_C* play = new Icon_C(10, 10, 75, 34);
-		play->SetValue("play");
+		// play->SetValue("play");
 		components["play"] = play;
 
 		Icon_C* replay = new Icon_C(10, 10, 84, 34);
-		replay->SetValue("repeat_on");
+		// replay->SetValue("repeat_on");
 		components["replay"] = replay;
 	}
 }
 
 void CurrentlyPlaying_W::Render() {
 
-	// get time elapsed
-	newTime = ::GetTickCount();
-	currentTimePassed = newTime - previousTime;
-
-	// loading bar
-	static_cast<ProgressBar_C*>(components["loadBar"])
-		->SetProgress(CalculateSongProgress(currentTimePassed));
-
-	// timers
-	int progress = jsonProgress + currentTimePassed;
-	int timePassed = (float)progress / 1000.0f;
-	int timeLeft = (jsonSongLength - progress) / 1000.0f;
-
-	static_cast<Timer_C*>(components["timerA"])
-		->SetTime(timePassed);
-
-	static_cast<Timer_C*>(components["timerB"])
-		->SetTime(timeLeft);
+	UpdatePlaybackContainers();
 
 	Window::Render();
 }
@@ -113,8 +97,9 @@ void CurrentlyPlaying_W::APIPoll() {
 	previousTime = ::GetTickCount();
 
 	// keep track of when the song changes 
-	if (currentTrackID == "")
+	if (currentTrackID == "") {
 		currentTrackID = currentPlayback["item"]["id"].get<std::string>();
+	}
 
 	else if (currentTrackID != currentPlayback["item"]["id"].get<std::string>()) {
 		UpdateSongContainers();
@@ -140,4 +125,44 @@ void CurrentlyPlaying_W::UpdateSongContainers() {
 	// artist title text
 	static_cast<TextComponent*>(components["artist"])
 		->RenderText(currentPlayback["item"]["artists"][0]["name"]);
+}
+
+void CurrentlyPlaying_W::UpdatePlaybackContainers() {
+
+	// get time elapsed
+	newTime = ::GetTickCount();
+	currentTimePassed = newTime - previousTime;
+
+	// loading bar
+	static_cast<ProgressBar_C*>(components["loadBar"])
+		->SetProgress(CalculateSongProgress(currentTimePassed));
+
+	// timers
+	int progress = jsonProgress + currentTimePassed;
+	int timePassed = (float)progress / 1000.0f;
+	int timeLeft = (jsonSongLength - progress) / 1000.0f;
+
+	static_cast<Timer_C*>(components["timerA"])
+		->SetTime(timePassed);
+
+	static_cast<Timer_C*>(components["timerB"])
+		->SetTime(timeLeft);
+
+	// icons
+	static_cast<Icon_C*>(components["shuffle"])
+		->SetValue(
+			currentPlayback["shuffle_state"]
+			? "shuffle_on"
+			: "shuffle_off"
+		);
+
+	static_cast<Icon_C*>(components["play"])
+		->SetValue(
+			currentPlayback["is_playing"]
+			? "play"
+			: "pause"
+		);
+
+	static_cast<Icon_C*>(components["replay"])
+		->SetValue("repeat_on");
 }

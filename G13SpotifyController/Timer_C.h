@@ -6,6 +6,7 @@ class Timer_C :
 {
 public:
 	Timer_C(int posx, int posy, int startSeconds);
+	Timer_C(int posx, int posy);
 	~Timer_C();
 
 	void SetTime(int seconds);

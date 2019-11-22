@@ -92,7 +92,7 @@ void Requester::TestRequest() {
 _json Requester::GetCurrentPlayback() {
 
 	// setup client and request
-	http_client client(U("https://api.spotify.com/v1/me/player/currently-playing"));
+	http_client client(U("https://api.spotify.com/v1/me/player"));
 	http_request request(methods::GET);
 
 	// combine ACCESS_TOKEN with Bearer keyword

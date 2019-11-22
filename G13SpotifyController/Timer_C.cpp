@@ -10,6 +10,13 @@ Timer_C::Timer_C(int posx, int posy, int startSeconds)
 	// _ui.inverted = true;
 }
 
+Timer_C::Timer_C(int posx, int posy)
+	: Compact_TC(18, posx, posy)
+{
+
+	SetTime(0);
+}
+
 
 Timer_C::~Timer_C()
 {

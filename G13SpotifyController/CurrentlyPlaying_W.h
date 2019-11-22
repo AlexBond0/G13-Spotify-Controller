@@ -30,6 +30,8 @@ private:
 	void APIPoll();
 
 	float CalculateSongProgress(int timePassed);
+
 	void UpdateSongContainers();
+	void UpdatePlaybackContainers();
 };
 
