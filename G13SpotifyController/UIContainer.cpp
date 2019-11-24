@@ -133,10 +133,6 @@ void UIContainer::Imprint(UIContainer& stamp, int x, int y) {
 	int lhWidth = GetWidth();
 	int lhHeight = GetHeight();
 
-	// calculate offset between containers
-	//int offsetX = stamp.GetPosX() - GetPosX();
-	//int offsetY = stamp.GetPosY() - GetPosY();
-
 	int relativeX;
 	int relativeY;
 
@@ -167,42 +163,6 @@ void UIContainer::Clear() {
 	std::fill_n(UIdata, dataWidth * dataHeight, 0);
 }
 
-//// imprint the right-hand container onto the left-hand container
-//UIContainer operator<< (UIContainer& lhs, UIContainer& rhs) {
-//
-//	// get widths and heights once
-//	int rhWidth = rhs.GetWidth();
-//	int rhHeight = rhs.GetHeight();
-//	int lhWidth = lhs.GetWidth();
-//	int lhHeight = lhs.GetHeight();
-//
-//	// calculate offset between containers
-//	/*int offsetX = rhs.GetPosX() - lhs.GetPosX();
-//	int offsetY = rhs.GetPosY() - lhs.GetPosY();*/
-//
-//
-//	int relativeX;
-//	int relativeY;
-//
-//	BYTE pixel;
-//
-//	// loop over right hand container
-//	for (int rhx = 0; rhx < rhWidth; rhx++) {
-//		for (int rhy = 0; rhy < rhHeight; rhy++) {
-//
-//			relativeX = rhx + offsetX;
-//			relativeY = rhy + offsetY;
-//			pixel = rhs.GetPixel(rhx, rhy);
-//
-//			// set pixel in the left hand container according to offsets
-//			if (pixel >= 128)
-//				lhs.SetPixel(relativeX, relativeY, pixel);
-//		}
-//	}
-//
-//	return lhs;
-//}
-
 int UIContainer::GetWidth() {
 
 	return dataWidth;
@@ -212,13 +172,3 @@ int UIContainer::GetHeight() {
 
 	return dataHeight;
 }
-
-//int UIContainer::GetPosX() {
-//
-//	return positionX;
-//}
-//
-//int UIContainer::GetPosY() {
-//
-//	return positionY;
-//}

@@ -20,6 +20,9 @@ var client_id = '3637514e0efd45039de424919821c07c'; // Your client id
 var client_secret = '38eada464bca477ca258ba765d9129f8'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
+var encoded_client_data = new Buffer(client_id + ':' + client_secret).toString('base64');
+
+
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -35,16 +38,22 @@ var generateRandomString = function(length) {
   return text;
 };
 
-var saveAccessAndRefreshTokens = (body) => {
+var saveTokenData = (body) => {
 
-  // retreive tokens from responce body
-  var access_token  = body.access_token,
-      refresh_token = body.refresh_token,
-      expires_in    = body.expires_in;
+  // get current time
+  var date = new Date()
+  var currentTime = date.getTime();
 
-  var tokens = access_token + " " + refresh_token + " " + expires_in;
+  var tokenJson;
+  tokenJson = {
+    "access_token" : body.access_token,
+    "refresh_token" : body.refresh_token,
+    "encoded_client_data" : encoded_client_data,
+    "expires_in" : body.expires_in,
+    "currentTime" : currentTime,
+  }
 
-  fs.writeFile("../G13SpotifyController/tokens.txt", tokens, function(err) {
+  fs.writeFile("../G13SpotifyController/tokens.json", JSON.stringify(tokenJson), function(err) {
 
     if(err) {
         return console.log(err);
@@ -53,6 +62,9 @@ var saveAccessAndRefreshTokens = (body) => {
     console.log("The file was saved!");
   });
 }
+
+
+
 
 var stateKey = 'spotify_auth_state';
 
@@ -111,7 +123,7 @@ app.get('/callback', function(req, res) {
         grant_type: 'authorization_code'
       },
       headers: {
-        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+        'Authorization': 'Basic ' + encoded_client_data
       },
       json: true
     };
@@ -125,7 +137,7 @@ app.get('/callback', function(req, res) {
             expires_in    = body.expires_in;
 
         // save tokens fpr the G13 application to access
-        saveAccessAndRefreshTokens(body);
+        saveTokenData(body);
 
         // return user info to show we got the right one
         var options = {
@@ -171,7 +183,7 @@ app.get('/refresh_token', function(req, res) {
   var refresh_token = req.query.refresh_token;
   var authOptions = {
     url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+    headers: { 'Authorization': 'Basic ' + encoded_client_data },
     form: {
       grant_type: 'refresh_token',
       refresh_token: refresh_token
