@@ -20,56 +20,54 @@ CurrentlyPlaying_W::~CurrentlyPlaying_W() {
 
 void CurrentlyPlaying_W::CreateContainers(_json currentPlayback) {
 
-	if (currentPlayback["is_playing"]) {
+	// main song title text
+	TextComponent* text = new Lucida_TC(LOGI_LCD_MONO_WIDTH - 1, 1, 0);
+	components["title"] = text;
 
-		// main song title text
-		TextComponent* text = new Lucida_TC(LOGI_LCD_MONO_WIDTH - 1, 1, 0);
-		components["title"] = text;
+	// artist title text
+	text = new Compact_TC(LOGI_LCD_MONO_WIDTH - 1, 1, 11);
+	components["artist"] = text;
 
-		// artist title text
-		text = new Compact_TC(LOGI_LCD_MONO_WIDTH - 1, 1, 11);
-		components["artist"] = text;
+	// sepearting bar
+	Component* bar = new Bar_C(
+		1,
+		18,
+		Direction::HORIZONTAL,
+		LOGI_LCD_MONO_WIDTH - 1,
+		BarType::DOTTED
+	);
+	components["topBar"] = bar;
 
-		// sepearting bar
-		Component* bar = new Bar_C(
-			1,
-			18,
-			Direction::HORIZONTAL,
-			LOGI_LCD_MONO_WIDTH - 1,
-			BarType::DOTTED
-		);
-		components["topBar"] = bar;
+	// loading bar
+	ProgressBar_C* loadBar = new ProgressBar_C(
+		LOGI_LCD_MONO_WIDTH - 8,
+		4,
+		30
+	);
+	components["loadBar"] = loadBar;
 
-		// loading bar
-		ProgressBar_C* loadBar = new ProgressBar_C(
-			LOGI_LCD_MONO_WIDTH - 8,
-			4,
-			30
-		);
-		components["loadBar"] = loadBar;
+	// timers
+	Timer_C* timer = new Timer_C(3, 22);
+	components["timerA"] = timer;
 
-		// timers
-		Timer_C* timer = new Timer_C(3, 22);
-		components["timerA"] = timer;
+	timer = new Timer_C(140, 22);
+	components["timerB"] = timer;
 
-		timer = new Timer_C(140, 22);
-		components["timerB"] = timer;
+	// icons
+	Icon_C::LoadIcons();
 
-		// icons
-		Icon_C::LoadIcons();
+	Icon_C* shuffle = new Icon_C(10, 10, 60, 34);
+	components["shuffle"] = shuffle;
 
-		Icon_C* shuffle = new Icon_C(10, 10, 60, 34);
-		components["shuffle"] = shuffle;
+	Icon_C* play = new Icon_C(10, 10, 75, 34);
+	components["play"] = play;
 
-		Icon_C* play = new Icon_C(10, 10, 75, 34);
-		components["play"] = play;
+	Icon_C* replay = new Icon_C(10, 10, 84, 34);
+	components["replay"] = replay;
 
-		Icon_C* replay = new Icon_C(10, 10, 84, 34);
-		components["replay"] = replay;
-
-		Icon_C* liked = new Icon_C(10, 10, 97, 34);
-		components["liked"] = liked;
-	}
+	Icon_C* liked = new Icon_C(10, 10, 97, 34);
+	components["liked"] = liked;
+	
 }
 
 void CurrentlyPlaying_W::Render() {

@@ -2,6 +2,8 @@
 
 #include "Tools.h"
 
+_json Tools::setup;
+
 std::wstring Tools::to_Wstring(std::string str) {
 
 	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
@@ -28,7 +30,22 @@ std::string Tools::EncodeBodyURI(_json body) {
 	return bodyURI;
 }
 
-//std::string body;
-//body = "grant_type=refresh_token";
-//body += ("&refresh_token=" + REFRESH_TOKEN);
-//request.set_body(body, "application/x-www-form-urlencoded");
+void Tools::ReadSetupFile() {
+
+	std::string tokens;
+	std::ifstream myfile("Setup.json");
+	if (myfile.is_open()) {
+
+		std::string tokenData(
+			(std::istreambuf_iterator<char>(myfile)),
+			(std::istreambuf_iterator<char>()));
+
+		std::stringstream ss(tokenData);
+		setup = _json::parse(ss);
+	}
+}
+
+std::wstring Tools::GetFolder(std::string folderID) {
+
+	return to_Wstring(setup["folders"][folderID].get<std::string>());
+}

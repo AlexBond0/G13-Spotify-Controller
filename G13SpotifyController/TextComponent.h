@@ -24,5 +24,7 @@ protected:
 	bool hasUppercase;
 
 private:
+	
+	bool hasLoaded = false;
 };
 

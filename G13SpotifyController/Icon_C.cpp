@@ -26,12 +26,15 @@ void Icon_C::SetValue(std::string name) {
 
 void Icon_C::LoadIcons() {
 
+	// get correct folder path
+	std::wstring folder = Tools::GetFolder("Text");
+
 	// load icons
-	UIContainer* rawIcons = new UIContainer(L"../Text/Icons/icons.bmp");
+	UIContainer* rawIcons = new UIContainer(folder + L"/Icons/icons.bmp");
 
 	// load JSON data
 	_json iconLayout;
-	std::ifstream myfile(L"../Text/Icons/layout.json");
+	std::ifstream myfile(folder + L"/Icons/layout.json");
 	if (myfile.is_open()) {
 
 		std::string rawJSON(

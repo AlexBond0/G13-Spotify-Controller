@@ -36,7 +36,6 @@ public:
 	bool Initiate();
 
 	void OpenSpotifyLogin();
-	// void TestRequest();
 
 	_json GetCurrentPlayback();
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "UIContainer.h"
+#include "Tools.h"
 
 #include <cpprest/filestream.h>
 #include <nlohmann/json.hpp>

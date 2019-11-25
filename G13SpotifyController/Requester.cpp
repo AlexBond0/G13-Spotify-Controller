@@ -44,50 +44,12 @@ bool Requester::Initiate() {
 void Requester::OpenSpotifyLogin() {
 
 	// run node server to preform OArth
+	OutputDebugString("\nOpening Spotify login...");
 	system("node ../NodeAuth/app.js");
 
 	// once completed, the node server should have saved access and refresh tokens to the file
 	ReadTokens();
 }
-
-//void Requester::TestRequest() {
-//
-//		// setup client and request
-//		http_client client(U("https://api.spotify.com/v1/me"));
-//		http_request request(methods::GET);
-//
-//		// combine ACCESS_TOKEN with Bearer keyword
-//		const std::wstring access = (L"Bearer " + Tools::to_Wstring(ACCESS_TOKEN));
-//
-//		// add the Authorization header
-//		request.headers().add(L"Authorization", access);
-//
-//		pplx::task<void> task = client.request(request)
-//
-//			.then([](http_response response)-> pplx::task<json::value> {
-//
-//			if (response.status_code() == status_codes::OK) {
-//				OutputDebugString("\n- VALID AUTHORIZATION");
-//				return response.extract_json();
-//			}
-//			else {
-//				OutputDebugString("\n- INVALID AUTHORIZATION");
-//				return pplx::task_from_result(json::value());
-//			}; })
-//
-//			.then([](pplx::task<json::value> previousTask) {
-//				try {
-//					const json::value & v = previousTask.get();
-//					std::wstring rawjson = v.serialize();
-//					// OutputDebugString((v.to_string()));
-//				}
-//				catch (const http_exception &e) {
-//					std::cout << e.what() << std::endl;
-//				}
-//			});
-//
-//			task.wait();
-//}
 
 _json Requester::GetCurrentPlayback() {
 
@@ -138,17 +100,9 @@ void Requester::ReadTokens() {
 		std::string tokenData(
 			(std::istreambuf_iterator<char>(myfile)),
 			(std::istreambuf_iterator<char>()));
-
-		// get the token information from the file
-		// std::vector <std::string> tokens;
 		
 		std::stringstream ss(tokenData);
 		_json tokens = _json::parse(ss);
-
-		//std::string token;
-		//while (std::getline(ss, token, ' ')) {
-		//	tokens.push_back(token);
-		//}
 
 		if (tokens.size() != 5) {
 
@@ -158,6 +112,8 @@ void Requester::ReadTokens() {
 			OpenSpotifyLogin();
 		}
 		else {
+
+			OutputDebugString("\nRetreived valid tokens...");
 
 			ACCESS_TOKEN = tokens["access_token"].get<std::string>();
 			REFRESH_TOKEN = tokens["refresh_token"].get<std::string>();
