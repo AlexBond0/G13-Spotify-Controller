@@ -76,7 +76,7 @@ void CurrentlyPlaying_W::Render() {
 
 	// check if a song has ended
 	CalculateCurrentTime();
-	if (CalculateSongProgress(currentTimePassed) > 1) {
+	if (CalculateSongProgress(currentTimePassed) > 0.95) {
 
 		// stop constant API calls
 		sleepModeActive = true;
