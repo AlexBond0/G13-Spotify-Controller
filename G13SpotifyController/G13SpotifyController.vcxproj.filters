@@ -5,9 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Windows">
-      <UniqueIdentifier>{c29f0ce7-2da6-4e17-b154-d7fb20d02043}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{c02694d0-d16e-4616-bcbb-b87ba3181248}</UniqueIdentifier>
     </Filter>
@@ -27,6 +24,9 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Windows">
+      <UniqueIdentifier>{c29f0ce7-2da6-4e17-b154-d7fb20d02043}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,10 +49,10 @@
       <Filter>Source Files\Components\Text</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
-      <Filter>Windows</Filter>
+      <Filter>Source Files\Windows</Filter>
     </ClCompile>
     <ClCompile Include="CurrentlyPlaying_W.cpp">
-      <Filter>Windows</Filter>
+      <Filter>Source Files\Windows</Filter>
     </ClCompile>
     <ClCompile Include="G13Container.cpp">
       <Filter>Source Files\Components\Base</Filter>
@@ -96,10 +96,10 @@
       <Filter>Source Files\Components\Text</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
-      <Filter>Windows</Filter>
+      <Filter>Source Files\Windows</Filter>
     </ClInclude>
     <ClInclude Include="CurrentlyPlaying_W.h">
-      <Filter>Windows</Filter>
+      <Filter>Source Files\Windows</Filter>
     </ClInclude>
     <ClInclude Include="G13Container.h">
       <Filter>Source Files\Components\Base</Filter>

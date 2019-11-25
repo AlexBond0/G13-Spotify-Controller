@@ -29,5 +29,6 @@ Component::~Component()
 
 void Component::Render(UIContainer* screen) {
 
-	screen->Imprint(_ui, positionX, positionY);
+	if (IsVisible)
+		screen->Imprint(_ui, positionX, positionY);
 }

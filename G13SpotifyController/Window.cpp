@@ -59,7 +59,7 @@ LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
 			Render();
 
 		else if (timerid == apiPollTimer)
-			APIPoll();
+			OnAPITimer();
 
 		break;
 	}
@@ -80,6 +80,18 @@ void Window::CheckInput() {
 	BTN1 = LogiLcdIsButtonPressed(LOGI_LCD_MONO_BUTTON_1);
 	BTN2 = LogiLcdIsButtonPressed(LOGI_LCD_MONO_BUTTON_2);
 	BTN3 = LogiLcdIsButtonPressed(LOGI_LCD_MONO_BUTTON_3);
+
+	// if any buttons have changed
+	if (BTN0 != oldBTN0 || BTN1 != oldBTN1 || BTN2 != oldBTN2 || BTN3 != oldBTN3) {
+
+		OnBtnChange();
+
+		// make note of new button states
+		oldBTN0 = BTN0;
+		oldBTN1 = BTN1;
+		oldBTN2 = BTN2;
+		oldBTN3 = BTN3;
+	}
 }
 
 void Window::Render() {

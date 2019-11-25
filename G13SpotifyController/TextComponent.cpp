@@ -26,7 +26,8 @@ _json TextComponent::LoadTextLayout(std::wstring filename) {
 
 		std::string rawJSON(
 			(std::istreambuf_iterator<char>(myfile)),
-			(std::istreambuf_iterator<char>()));
+			(std::istreambuf_iterator<char>())
+		);
 
 		textLayout = _json::parse(rawJSON);
 	}

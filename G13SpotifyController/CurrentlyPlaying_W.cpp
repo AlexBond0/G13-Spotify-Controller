@@ -67,14 +67,31 @@ void CurrentlyPlaying_W::CreateContainers(_json currentPlayback) {
 
 	Icon_C* liked = new Icon_C(10, 10, 97, 34);
 	components["liked"] = liked;
-	
+
+	Icon_C* sleep = new Icon_C(10, 10, 147, 34);
+	components["sleep"] = sleep;
 }
 
 void CurrentlyPlaying_W::Render() {
 
+	// check if a song has ended
+	CalculateCurrentTime();
+	if (CalculateSongProgress(currentTimePassed) > 1) {
+
+		// stop constant API calls
+		sleepModeActive = true;
+		APIPoll();
+	}
+
 	UpdatePlaybackContainers();
 
 	Window::Render();
+}
+
+void CurrentlyPlaying_W::OnAPITimer() {
+
+	if (!sleepModeActive)
+		APIPoll();
 }
 
 void CurrentlyPlaying_W::APIPoll() {
@@ -85,26 +102,20 @@ void CurrentlyPlaying_W::APIPoll() {
 	// save commonly used values
 	jsonProgress = currentPlayback["progress_ms"].get<int>() - 1000;
 	jsonSongLength = currentPlayback["item"]["duration_ms"].get<int>();
+
 	previousTime = ::GetTickCount();
+	newTime = ::GetTickCount();
 
 	// keep track of when the song changes 
 	if (currentTrackID == "") {
 		currentTrackID = currentPlayback["item"]["id"].get<std::string>();
 	}
-
 	else if (currentTrackID != currentPlayback["item"]["id"].get<std::string>()) {
+
+		// update song containers
 		UpdateSongContainers();
 		currentTrackID = currentPlayback["item"]["id"].get<std::string>();
 	}
-}
-
-float CurrentlyPlaying_W::CalculateSongProgress(int timePassed) {
-
-	// stops a divide by zero situation
-	if (jsonProgress == 0)
-		jsonProgress = 1;
-
-	return (float)(jsonProgress + timePassed) / (float)(jsonSongLength);
 }
 
 void CurrentlyPlaying_W::UpdateSongContainers() {
@@ -130,10 +141,7 @@ void CurrentlyPlaying_W::UpdateSongContainers() {
 void CurrentlyPlaying_W::UpdatePlaybackContainers() {
 
 	// get time elapsed
-	if (currentPlayback["is_playing"])
-		newTime = ::GetTickCount();
-
-	currentTimePassed = newTime - previousTime;
+	CalculateCurrentTime();
 
 	// loading bar
 	static_cast<ProgressBar_C*>(components["loadBar"])
@@ -170,4 +178,36 @@ void CurrentlyPlaying_W::UpdatePlaybackContainers() {
 
 	static_cast<Icon_C*>(components["liked"])
 		->SetValue("like_off");
+
+	static_cast<Icon_C*>(components["sleep"])
+		->SetValue(
+			sleepModeActive
+			? "sleep_on"
+			: "sleep_off"
+		);
+}
+
+float CurrentlyPlaying_W::CalculateSongProgress(int timePassed) {
+
+	// stops a divide by zero situation
+	if (jsonProgress == 0)
+		jsonProgress = 1;
+
+	return (float)(jsonProgress + timePassed) / (float)(jsonSongLength);
+}
+
+void CurrentlyPlaying_W::OnBtnChange() {
+
+	// come out of sleep mode
+	sleepModeActive = false;
+	APIPoll();
+}
+
+void CurrentlyPlaying_W::CalculateCurrentTime() {
+
+	// get time elapsed
+	if (currentPlayback["is_playing"])
+		newTime = ::GetTickCount();
+
+	currentTimePassed = newTime - previousTime;
 }

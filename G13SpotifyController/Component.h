@@ -17,6 +17,8 @@ public:
 
 	void Render(UIContainer* screen);
 
+	bool IsVisible = true;
+
 protected:
 
 	UIContainer _ui;

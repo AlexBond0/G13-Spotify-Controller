@@ -26,12 +26,19 @@ private:
 	int newTime;
 	int currentTimePassed;
 
+	bool sleepModeActive = false;
+
 	void Render();
 	void APIPoll();
+
+	void OnAPITimer();
+	void OnBtnChange();
 
 	float CalculateSongProgress(int timePassed);
 
 	void UpdateSongContainers();
 	void UpdatePlaybackContainers();
+
+	void CalculateCurrentTime();
 };
 

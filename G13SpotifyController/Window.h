@@ -32,13 +32,19 @@ protected:
 	std::map<std::string, Component*> components;
 
 	virtual void Render();
-	virtual void APIPoll() {};
+	virtual void OnAPITimer() {};
+	virtual void OnBtnChange() {};
 
 private:
 
 	int renderTimer;
 	int inputTimer;
 	int apiPollTimer;
+
+	bool oldBTN0 = false;
+	bool oldBTN1 = false;
+	bool oldBTN2 = false;
+	bool oldBTN3 = false;
 
 	LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	void CheckInput();
