@@ -65,19 +65,15 @@ void TextComponent::ConstructFont(UIContainer rawText, _json layout) {
 		kerning = character["kerning"];
 		textWidth = endColumn - startColumn - 1 + kerning;
 
-		// create the new UIContainer
 		newChar = (character["char"].get<std::string>()).at(0);
-		/*dictionary[newChar] = new UIContainer(
-			textWidth,
-			textHeight
-		);
-		currentUIContainer = dictionary[newChar];*/
 
+		// create the new UIContainer
 		currentUIContainer = new UIContainer(
 			textWidth,
 			textHeight
 		);
 
+		// create the Character container
 		Character newC;
 		newC.ui = currentUIContainer;
 		newC.width = textWidth;
@@ -105,13 +101,14 @@ void TextComponent::RenderText(std::string text) {
 	// if text needs updating
 	if (text != currentText) {
 
+		// save new text data
 		currentText == text;
+		RenderSetup();
 
 		// clear current component
 		_ui.Clear();
 
 		int currentColumn = 0;
-		// int renderableWidth;
 		int width = _ui.GetWidth();
 		UIContainer* container;
 
@@ -125,7 +122,7 @@ void TextComponent::RenderText(std::string text) {
 			// space
 			if (letter == ' ') {
 
-				currentColumn += 4;
+				currentColumn += SPACE_WIDTH;
 			}
 
 			else {
@@ -135,19 +132,10 @@ void TextComponent::RenderText(std::string text) {
 					letter = tolower(letter);
 
 				// unknown character
-				/*if (!dictionary[letter])
-					letter = '?';*/
 				if (dictionary.count(letter) == 0)
 					letter = '?';
 
 				container = dictionary[letter].ui;
-
-				// calculate renderable size of character
-				/*renderableWidth = (
-					container->GetWidth() + currentColumn <= width
-					? container->GetWidth()
-					: width - currentColumn
-				);*/
 
 				// loop over character container
 				BYTE pixel;
@@ -166,4 +154,28 @@ void TextComponent::RenderText(std::string text) {
 			}
 		}
 	}
+}
+
+// calculate fill renderable width of given text
+void TextComponent::RenderSetup() {
+
+	// calculate width of renderable text
+	renderableTextWidth = 0;
+	for (char letter : currentText) {
+
+		if (letter == ' ') {
+
+			renderableTextWidth += SPACE_WIDTH;
+		}
+
+		else {
+
+			if (dictionary.count(letter) == 0)
+				letter = '?';
+
+			renderableTextWidth += dictionary[letter].width;
+		}
+	}
+
+	currentTextScroll = 0;
 }

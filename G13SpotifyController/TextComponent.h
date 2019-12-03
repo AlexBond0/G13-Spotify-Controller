@@ -6,6 +6,8 @@
 #include "Component.h"
 
 
+#define SPACE_WIDTH 4;
+
 struct Character {
 	UIContainer* ui;
 	int width;
@@ -33,5 +35,10 @@ private:
 	
 	std::string currentText = "";
 	bool hasLoaded = false;
+
+	int renderableTextWidth;
+	int currentTextScroll;
+
+	void RenderSetup();
 };
 
