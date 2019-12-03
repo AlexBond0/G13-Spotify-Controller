@@ -21,10 +21,12 @@ void CurrentlyPlaying_W::CreateContainers(_json currentPlayback) {
 
 	// main song title text
 	TextComponent* text = new Lucida_TC(LOGI_LCD_MONO_WIDTH - 1, 1, 0);
+	text->SetAutoScroll(true);
 	components["title"] = text;
 
 	// artist title text
 	text = new Compact_TC(LOGI_LCD_MONO_WIDTH - 1, 1, 11);
+	text->SetAutoScroll(true);
 	components["artist"] = text;
 
 	// sepearting bar
@@ -141,6 +143,13 @@ void CurrentlyPlaying_W::UpdatePlaybackContainers() {
 
 	// get time elapsed
 	CalculateCurrentTime();
+
+	// notify possible scrolling text elements
+	static_cast<TextComponent*>(components["title"])
+		->Update();
+	static_cast<TextComponent*>(components["artist"])
+		->Update();
+
 
 	// loading bar
 	static_cast<ProgressBar_C*>(components["loadBar"])

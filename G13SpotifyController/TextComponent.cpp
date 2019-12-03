@@ -101,93 +101,175 @@ void TextComponent::RenderText(std::string text) {
 	// if text needs updating
 	if (text != currentText) {
 
-		// save new text data
-		currentText = text;
-		RenderSetup();
+		if (text.length() == 0) {
 
-		// clear current component
-		_ui.Clear();
+			// clear current component
+			_ui.Clear();
+		}
+		else {
 
-		// get how far along rendering should begin
-		int renderColumn = 0;
-		int textStart = currentTextScroll;
-		int letterColumn;
-		int letterOffset = 0;
+			// save new text data
+			currentText = text;
+			RenderSetup();
 
-		// get which letter would fall in this column
-		int currentwidth = 0;
-		int currentLetter = 0;
-		char currentChar;
-		Character letter;
-		bool foundStartChar = false;
+			TextToUI();
+		}
+	}
+}
+
+void TextComponent::SetScroll(int scroll) {
+
+	currentTextScroll = scroll;
+
+	TextToUI();
+}
+
+void TextComponent::SetAutoScroll(bool scrolling) {
+
+	autoScroll = scrolling;
+}
+
+void TextComponent::Update() {
+
+	if (autoScroll && isTooLong) {
+
+		if (scrollWait <= 0) {
+
+			// change direction once max is reached
+			if (currentTextScroll == maxScroll)
+				scrollForewards = false;
+
+			if (scrollForewards)
+				currentTextScroll--;
+			else
+				currentTextScroll++;
+
+			// render text
+			TextToUI();
+
+			// wait again when scroll returned
+			if (currentTextScroll == 0) {
+
+				scrollForewards = true;
+				scrollWait = SCROLL_PAUSE;
+			}
+		}
+
+		// wait to scroll
+		else {
+
+			scrollWait--;
+		}
+	}
+}
+
+void TextComponent::TextToUI() {
+
+	// clear current component
+	_ui.Clear();
+
+	// get how far along rendering should begin
+	int renderColumn = 0;
+	int textStart = currentTextScroll;
+	int letterOffset = 0;
+
+	// get which letter would fall in this column
+	int currentwidth = 0;
+	int currentLetter = 0;
+	bool foundStartChar = false;
+
+	Character letter = GetSafeCharacter(currentText.at(0));
+	char currentChar;
+
+	// is textStart negative?
+	if (textStart < 0) {
+
+		int letterColumn = textStart;
 
 		while (!foundStartChar) {
 
-			// if this letter passes the start of rendering
-			if (currentwidth >= textStart) {
+			currentChar = currentText.at(currentLetter);
 
-				// set where the letter starts 
-				letterColumn = textStart - currentwidth;
-				letterOffset = currentwidth - textStart;
+			// get distance letter spans
+			letterColumn += GetSafeWidth(currentChar);
+
+			if (letterColumn >= 0) {
+
+				letterOffset = GetSafeWidth(currentChar) - letterColumn;
 
 				// save the letter UIContainer
-				letter = GetSafeCharacter(text.at(currentLetter));
+				letter = GetSafeCharacter(currentChar);
+
+				// skip ahead for spaces
+				if (currentChar == ' ') {
+
+					renderColumn += (GetSafeWidth(currentChar) - letterOffset);
+					letterOffset = 0;
+					currentLetter++;
+
+					currentChar = currentText.at(currentLetter);
+					letter = GetSafeCharacter(currentChar);
+				}
 
 				foundStartChar = true;
 			}
+
 			else {
 
-				// calculate width info
-				currentwidth += GetSafeWidth(text.at(currentLetter));
 				currentLetter++;
 			}
 		}
+	}
 
-		// for each column of the renderable space
-		BYTE pixel;
-		int renderingwidth = (
-			_ui.GetWidth() < renderableTextWidth - (letterColumn + letterOffset)
-			? _ui.GetWidth()
-			: renderableTextWidth - (letterColumn + letterOffset)
-		);
+	// start renderColumn at textstart
+	else {
 
-		for (renderColumn; renderColumn < renderingwidth; renderColumn++) {
+		renderColumn = textStart;
+	}
 
-			// get next letter if needed
-			if (letterOffset == letter.width) {
+	// for each column of the renderable space
+	BYTE pixel;
+	int renderingwidth = (
+		_ui.GetWidth() < renderableTextWidth + currentTextScroll
+		? _ui.GetWidth()
+		: renderableTextWidth + currentTextScroll
+	);
 
-				letterColumn += letter.width;
-				letterOffset = 0;
+	for (renderColumn; renderColumn < renderingwidth; renderColumn++) {
+
+		// get next letter if needed
+		if (letterOffset == letter.width) {
+
+			letterOffset = 0;
+			currentLetter++;
+
+			if (currentLetter >= currentText.length())
+				return;
+
+			currentChar = currentText.at(currentLetter);
+
+			// skip over spaces
+			while (currentChar == ' ') {
+
+				renderColumn += SPACE_WIDTH;
 				currentLetter++;
 
-				if (currentLetter >= text.length())
-					return;
-
-				currentChar = text.at(currentLetter);
-
-				// skip over spaces
-				while (currentChar == ' ') {
-
-					renderColumn += SPACE_WIDTH;
-					currentLetter++;
-
-					currentChar = text.at(currentLetter);
-				}
-
-				letter = GetSafeCharacter(text.at(currentLetter));
+				currentChar = currentText.at(currentLetter);
 			}
 
-			// render column
-			for (int y = 0; y < letter.ui->GetHeight(); y++) {
-				
-				pixel = letter.ui->GetPixel(letterOffset, y);
-				
-				if (pixel >= 128)
-					_ui.SetPixel(renderColumn, y, pixel);
-			}
-
-			letterOffset++;
+			letter = GetSafeCharacter(currentText.at(currentLetter));
 		}
+
+		// render column
+		for (int y = 0; y < letter.ui->GetHeight(); y++) {
+
+			pixel = letter.ui->GetPixel(letterOffset, y);
+
+			if (pixel >= 128)
+				_ui.SetPixel(renderColumn, y, pixel);
+		}
+
+		letterOffset++;
 	}
 }
 
@@ -200,6 +282,13 @@ void TextComponent::RenderSetup() {
 		renderableTextWidth += GetSafeWidth(letter);
 
 	currentTextScroll = 0;
+	
+	isTooLong = (renderableTextWidth > _ui.GetWidth());
+	if (isTooLong) {
+
+		maxScroll = _ui.GetWidth() - renderableTextWidth;
+		scrollWait = SCROLL_PAUSE;
+	}
 }
 
 // calculate width of character with safety
@@ -225,51 +314,3 @@ Character TextComponent::GetSafeCharacter(char letter) {
 
 	return dictionary[letter];
 }
-
-
-
-//int currentColumn = 0;
-//int width = _ui.GetWidth();
-//UIContainer* container;
-//
-//// loop over each letter
-//for (char letter : text) {
-//
-//	// exit if ran out of space
-//	if (currentColumn >= width)
-//		return;
-//
-//	// space
-//	if (letter == ' ') {
-//
-//		currentColumn += SPACE_WIDTH;
-//	}
-//
-//	else {
-//
-//		// account for no upper case
-//		if (!hasUppercase)
-//			letter = tolower(letter);
-//
-//		// unknown character
-//		if (dictionary.count(letter) == 0)
-//			letter = '?';
-//
-//		container = dictionary[letter].ui;
-//
-//		// loop over character container
-//		BYTE pixel;
-//		for (int x = 0; x < dictionary[letter].width; x++) {
-//			for (int y = 0; y < container->GetHeight(); y++) {
-//
-//				pixel = container->GetPixel(x, y);
-//
-//				if (pixel >= 128)
-//					_ui.SetPixel(x + currentColumn, y, pixel);
-//			}
-//		}
-//
-//		// move the column along
-//		currentColumn += container->GetWidth();
-//	}
-//}
