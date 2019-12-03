@@ -40,5 +40,7 @@ private:
 	int currentTextScroll;
 
 	void RenderSetup();
+	int GetSafeWidth(char letter);
+	Character GetSafeCharacter(char letter);
 };
 

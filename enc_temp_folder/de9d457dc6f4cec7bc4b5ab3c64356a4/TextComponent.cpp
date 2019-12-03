@@ -214,7 +214,6 @@ int TextComponent::GetSafeWidth(char letter) {
 		return GetSafeCharacter(letter).width;
 }
 
-// get a safe Character object from the Dictionary given any character
 Character TextComponent::GetSafeCharacter(char letter) {
 
 	if (!hasUppercase)
