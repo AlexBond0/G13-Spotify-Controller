@@ -86,6 +86,18 @@ void Window::CheckInput() {
 
 		OnBtnChange();
 
+		if (BTN0 != oldBTN0)
+			OnBtn0Change(BTN0);
+
+		if (BTN1 != oldBTN1)
+			OnBtn0Change(BTN1);
+
+		if (BTN2 != oldBTN2)
+			OnBtn0Change(BTN2);
+
+		if (BTN3 != oldBTN3)
+			OnBtn0Change(BTN3);
+
 		// make note of new button states
 		oldBTN0 = BTN0;
 		oldBTN1 = BTN1;
@@ -93,6 +105,7 @@ void Window::CheckInput() {
 		oldBTN3 = BTN3;
 	}
 }
+
 
 void Window::Render() {
 
@@ -109,3 +122,4 @@ void Window::Render() {
 	// tell G13 to update screen
 	LogiLcdUpdate();
 }
+

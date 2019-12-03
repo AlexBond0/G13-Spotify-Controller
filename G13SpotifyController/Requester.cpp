@@ -11,6 +11,7 @@ Requester::~Requester()
 {
 }
 
+// log in a Spotify user and retreive valid session keys
 bool Requester::Initiate() {
 
 	// setup client and request
@@ -41,6 +42,7 @@ bool Requester::Initiate() {
 	return task.get();
 }
 
+// open the node application to log a user into Spoitify
 void Requester::OpenSpotifyLogin() {
 
 	// run node server to preform OArth
@@ -51,6 +53,7 @@ void Requester::OpenSpotifyLogin() {
 	ReadTokens();
 }
 
+// get the current Spotify playback details
 _json Requester::GetCurrentPlayback() {
 
 	CheckTokenExpiry();
@@ -65,6 +68,7 @@ _json Requester::GetCurrentPlayback() {
 	// add the Authorization header
 	request.headers().add(L"Authorization", access);
 
+	// process the request
 	pplx::task<_json> task = client.request(request)
 
 		.then([](http_response response)-> pplx::task<json::value> {
@@ -91,6 +95,7 @@ _json Requester::GetCurrentPlayback() {
 	return task.get();
 }
 
+// read the tokens obtained by the Node login system
 void Requester::ReadTokens() {
 
 	std::string tokens;
@@ -115,11 +120,11 @@ void Requester::ReadTokens() {
 
 			OutputDebugString("\nRetreived valid tokens...");
 
+			// save the obtained tokens
 			ACCESS_TOKEN = tokens["access_token"].get<std::string>();
 			REFRESH_TOKEN = tokens["refresh_token"].get<std::string>();
 			ENCODED_CLIENT_DATA = tokens["encoded_client_data"].get<std::string>();
 
-			// std::string::size_type sz;
 			TOKEN_VALID_FROM = (tokens["currentTime"].get<unsigned long long>() / 1000);
 			TOKEN_VALID_TILL =
 				TOKEN_VALID_FROM + (tokens["expires_in"].get<unsigned long long>());
@@ -127,6 +132,7 @@ void Requester::ReadTokens() {
 	}
 }
 
+// confirms the current Spotify tokens are still valid, and updates if not
 void Requester::CheckTokenExpiry() {
 
 	std::time_t currentTime = std::time(nullptr);
@@ -152,6 +158,7 @@ void Requester::CheckTokenExpiry() {
 		body["refresh_token"] = REFRESH_TOKEN;
 		request.set_body(Tools::EncodeBodyURI(body), "application/x-www-form-urlencoded");
 		
+		// process request
 		pplx::task<_json> task = client.request(request)
 
 			.then([](http_response response) {
@@ -180,6 +187,7 @@ void Requester::CheckTokenExpiry() {
 
 		OutputDebugString("\nRETREIVED NEW ACCESS TOKEN\n");
 
+		// use the new access token
 		_json newTokenData = task.get();
 
 		ACCESS_TOKEN = newTokenData["access_token"].get<std::string>();

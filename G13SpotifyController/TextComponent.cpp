@@ -11,9 +11,9 @@ TextComponent::TextComponent(int width, int height, int posx, int posy)
 
 TextComponent::~TextComponent() {
 
-	for (std::pair<char, UIContainer*> letter : dictionary) {
+	for (std::pair<char, Character> letter : dictionary) {
 
-		delete letter.second;
+		delete letter.second.ui;
 	}
 }
  
@@ -67,11 +67,22 @@ void TextComponent::ConstructFont(UIContainer rawText, _json layout) {
 
 		// create the new UIContainer
 		newChar = (character["char"].get<std::string>()).at(0);
-		dictionary[newChar] = new UIContainer(
+		/*dictionary[newChar] = new UIContainer(
 			textWidth,
 			textHeight
 		);
-		currentUIContainer = dictionary[newChar];
+		currentUIContainer = dictionary[newChar];*/
+
+		currentUIContainer = new UIContainer(
+			textWidth,
+			textHeight
+		);
+
+		Character newC;
+		newC.ui = currentUIContainer;
+		newC.width = textWidth;
+
+		dictionary[newChar] = newC;
 
 		// copy over the pixels
 		for (int x = 0; x < textWidth; x++) {
@@ -91,60 +102,68 @@ void TextComponent::ConstructFont(UIContainer rawText, _json layout) {
 
 void TextComponent::RenderText(std::string text) {
 
-	// clear current component
-	_ui.Clear();
+	// if text needs updating
+	if (text != currentText) {
 
-	int currentColumn = 0;
-	int renderableWidth;
-	int width = _ui.GetWidth();
-	UIContainer* container;
+		currentText == text;
 
-	// loop over each letter
-	for (char letter : text) {
+		// clear current component
+		_ui.Clear();
 
-		// exit if ran out of space
-		if (currentColumn >= width)
-			return;
+		int currentColumn = 0;
+		// int renderableWidth;
+		int width = _ui.GetWidth();
+		UIContainer* container;
 
-		// space
-		if (letter == ' ') {
+		// loop over each letter
+		for (char letter : text) {
 
-			currentColumn += 4;
-		}
+			// exit if ran out of space
+			if (currentColumn >= width)
+				return;
 
-		else {
+			// space
+			if (letter == ' ') {
 
-			// account for no upper case
-			if (!hasUppercase)
-				letter = tolower(letter);
-
-			// unknown character
-			if (!dictionary[letter])
-				letter = '?';
-
-			container = dictionary[letter];
-
-			// calculate renderable size of character
-			renderableWidth = (
-				container->GetWidth() + currentColumn <= width
-				? container->GetWidth()
-				: width - currentColumn
-			);
-
-			// loop over character container
-			BYTE pixel;
-			for (int x = 0; x < renderableWidth; x++) {
-				for (int y = 0; y < container->GetHeight(); y++) {
-
-					pixel = container->GetPixel(x, y);
-
-					if (pixel >= 128)
-						_ui.SetPixel(x + currentColumn, y, pixel);
-				}
+				currentColumn += 4;
 			}
 
-			// move the column along
-			currentColumn += container->GetWidth();
+			else {
+
+				// account for no upper case
+				if (!hasUppercase)
+					letter = tolower(letter);
+
+				// unknown character
+				/*if (!dictionary[letter])
+					letter = '?';*/
+				if (dictionary.count(letter) == 0)
+					letter = '?';
+
+				container = dictionary[letter].ui;
+
+				// calculate renderable size of character
+				/*renderableWidth = (
+					container->GetWidth() + currentColumn <= width
+					? container->GetWidth()
+					: width - currentColumn
+				);*/
+
+				// loop over character container
+				BYTE pixel;
+				for (int x = 0; x < dictionary[letter].width; x++) {
+					for (int y = 0; y < container->GetHeight(); y++) {
+
+						pixel = container->GetPixel(x, y);
+
+						if (pixel >= 128)
+							_ui.SetPixel(x + currentColumn, y, pixel);
+					}
+				}
+
+				// move the column along
+				currentColumn += container->GetWidth();
+			}
 		}
 	}
 }

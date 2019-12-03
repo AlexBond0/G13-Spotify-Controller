@@ -34,6 +34,11 @@ private:
 	void OnAPITimer();
 	void OnBtnChange();
 
+	void OnBtn0Change(bool isPressed);
+	void OnBtn1Change(bool isPressed);
+	void OnBtn2Change(bool isPressed);
+	void OnBtn3Change(bool isPressed);
+
 	float CalculateSongProgress(int timePassed);
 
 	void UpdateSongContainers();

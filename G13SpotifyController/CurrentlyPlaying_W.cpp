@@ -13,7 +13,6 @@ CurrentlyPlaying_W::CurrentlyPlaying_W(Requester* requester) {
 	Run();
 }
 
-
 CurrentlyPlaying_W::~CurrentlyPlaying_W() {
 
 }
@@ -76,7 +75,7 @@ void CurrentlyPlaying_W::Render() {
 
 	// check if a song has ended
 	CalculateCurrentTime();
-	if (CalculateSongProgress(currentTimePassed) > 0.95) {
+	if (CalculateSongProgress(currentTimePassed) > 0.99) {
 
 		// stop constant API calls
 		sleepModeActive = true;
@@ -102,7 +101,7 @@ void CurrentlyPlaying_W::APIPoll() {
 	// save commonly used values
 	jsonProgress = currentPlayback["progress_ms"].get<int>() - 1000;
 	jsonSongLength = currentPlayback["item"]["duration_ms"].get<int>();
-
+	 
 	previousTime = ::GetTickCount();
 	newTime = ::GetTickCount();
 
@@ -173,8 +172,12 @@ void CurrentlyPlaying_W::UpdatePlaybackContainers() {
 			: "pause"
 		);
 
+	std::string replayIcon;
+	if (currentPlayback["repeat_state"] == "context") replayIcon = "repeat_on";
+	else if (currentPlayback["repeat_state"] == "off") replayIcon = "repeat_off";
+	else if (currentPlayback["repeat_state"] == "track") replayIcon = "repeat_once";
 	static_cast<Icon_C*>(components["replay"])
-		->SetValue("repeat_on");
+		->SetValue(replayIcon);
 
 	static_cast<Icon_C*>(components["liked"])
 		->SetValue("like_off");
@@ -210,4 +213,20 @@ void CurrentlyPlaying_W::CalculateCurrentTime() {
 		newTime = ::GetTickCount();
 
 	currentTimePassed = newTime - previousTime;
+}
+
+void CurrentlyPlaying_W::OnBtn0Change(bool isPressed) {
+
+}
+
+void CurrentlyPlaying_W::OnBtn1Change(bool isPressed) {
+
+}
+
+void CurrentlyPlaying_W::OnBtn2Change(bool isPressed) {
+
+}
+
+void CurrentlyPlaying_W::OnBtn3Change(bool isPressed) {
+
 }

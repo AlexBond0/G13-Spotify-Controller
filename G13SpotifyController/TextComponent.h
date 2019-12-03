@@ -6,6 +6,12 @@
 #include "Component.h"
 
 
+struct Character {
+	UIContainer* ui;
+	int width;
+};
+
+
 class TextComponent:
 	public Component
 {
@@ -19,12 +25,13 @@ protected:
 	_json LoadTextLayout(std::wstring filename);
 	void ConstructFont(UIContainer rawText, _json layout);
 
-	std::map<char, UIContainer*> dictionary;
+	std::map<char, Character> dictionary;
 
 	bool hasUppercase;
 
 private:
 	
+	std::string currentText = "";
 	bool hasLoaded = false;
 };
 

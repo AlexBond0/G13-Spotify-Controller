@@ -35,6 +35,11 @@ protected:
 	virtual void OnAPITimer() {};
 	virtual void OnBtnChange() {};
 
+	virtual void OnBtn0Change(bool isPressed) {};
+	virtual void OnBtn1Change(bool isPressed) {};
+	virtual void OnBtn2Change(bool isPressed) {};
+	virtual void OnBtn3Change(bool isPressed) {};
+
 private:
 
 	int renderTimer;
